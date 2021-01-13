@@ -86,8 +86,8 @@ def overview():
 	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
 
 
-if __name__ == "__main__":
-	app.run(debug=False)
+# if __name__ == "__main__":
+# 	app.run(debug=False)
 	# app.run()
 
 
