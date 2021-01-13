@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
 from datetime import datetime
-from stock_info import ticker_investment
+from src.stock_info import ticker_investment
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 app = Flask(__name__)
