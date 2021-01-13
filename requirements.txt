@@ -7,3 +7,5 @@ MarkupSafe==1.1.1
 Werkzeug==1.0.1
 SQLAlchemy==1.0.11
 Flask-SQLAlchemy==2.1
+alpha_vantage==2.3
+schedule=0.4.0
