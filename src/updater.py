@@ -80,8 +80,8 @@ def update_cryptos():
 
 schedule.every().day.at("20:00").do(total_update)
 
-total_update()
+# total_update()
 
-# while 1:
-# 	schedule.run_pending()
+while 1:
+	schedule.run_pending()
 
