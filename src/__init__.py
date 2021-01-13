@@ -45,7 +45,7 @@ def get_standard_time(date_time):
 
 def top_stocks(number):
 	recent_stocks = Stock.query.order_by(*[Stock.id.desc(), Stock.price.asc()]).limit(len(ticker_investment)).all()
-	# recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
+	recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
 	card_values = []
 	for x in range(number):
 		if not check_number:
@@ -86,8 +86,8 @@ def overview():
 	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
 
 
-# if __name__ == "__main__":
-# 	app.run(debug=False)
+if __name__ == "__main__":
+	app.run(debug=False)
 	# app.run()
 
 
