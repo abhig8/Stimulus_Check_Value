@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 style="padding: 25px";>How much could your Stimulus Check be worth?</h1>
+<p>*Showing value based off of $1200 investment on April 15, 2020.*</p>
+<p>Select or Search for you desired investment.</p>
+<h2 style="padding: 10px">Top Performers</h2>
+<div class = "row"> 
+	{% for card in top_4 %}
+		<div class = "column d-flex justify-content-center">
+			<a href = {{ card[1] }}>
+				<div class="card">
+			    	<div class="container">
+						<h4>{{ card[0] }}</h4>
+				   		<h5>({{ card[1] }})</h5>
+						<p style="margin-bottom: 0">${{ card[2] }}</p>
+						<p style="margin-bottom: 0">
+							{% if card[3] > 0 %} 
+								+{{ card[3] }}%
+							{% elif card[3] == 0 %}
+								{{ card[4] }}% Change
+							{% else %}
+								-{{ 100 - card[3] }}%
+							{% endif %}
+						</p>
+			 		</div>
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+</div>
+<div class = "row"> 
+	{% for card in last_4 %}
+		<div class = "column d-flex justify-content-center">
+			<a href = {{ card[1] }}>
+				<div class="card">
+			    	<div class="container">
+						<h4>{{ card[0] }}</h4>
+				   		<h5>({{ card[1] }})</h5>
+						<p style="margin-bottom: 0">${{ card[2] }}</p>
+						<p style="margin-bottom: 0">
+							{% if card[3] > 0 %} 
+								+{{ card[3] }}%
+							{% elif card[3] == 0 %}
+								{{ card[4] }}% Change
+							{% else %}
+								-{{ 100 - card[3] }}%
+							{% endif %}
+						</p>
+			 		</div>
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+</div>
+
+<br>
+
+<div class = "row">
+	<div style="width: 100%"; class = "column d-flex justify-content-center">
+		<a href = "overview">
+			<div class="card">
+		    	<div class="container">
+					<h2>See all Investments</h2>
+		 		</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+{% endblock %}

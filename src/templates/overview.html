@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Overview{% endblock %}
+
+{% block content %}
+<h1 style="padding: 25px";>Overview</h1>
+<p style="margin-bottom: 0px";>*Choose Investments from Dropdowns and search for Tickers in Search Bar*</p>
+
+<br>
+<p style="margin-bottom: 5px";>*Showing value based off of $1200 investment on April 15, 2020.*</p>
+<p>Click on ticker button to navigate to investment.</p>
+
+<table style="text-align: center"; class="table">
+	<thead>
+    	<tr>
+      		<th scope="col">Ticker</th>
+      		<th scope="col">Investment</th>
+      		<th scope="col">Value</th>
+      		<th scope="col">Percent Change</th>
+    	</tr>
+    </thead>
+    <tbody>
+	{% for investment in investment_list%}
+		<tr style="vertical-align: middle";>
+        	<td>
+        		<a href="{{ investment[1] }}" style="font-size: 16px" class="btn btn-secondary btn-xs active" role="button" aria-pressed="true">{{investment[1]}}</a>
+        	</td>
+        	<td>{{ investment[0] }}</td>
+        	<td>${{ investment[2] }}</td>
+        	<td>
+            {% if investment[3] > 0 %} 
+              +{{ investment[3] }}%
+            {% elif investment[3] == 0 %}
+              {{ investment[3] }}% Change
+            {% else %}
+              -{{ 100 - investment[3] }}%
+            {% endif %}
+          </td>
+	    </tr>
+	{% endfor %}
+    </tbody>
+</table>
+{% endblock %}

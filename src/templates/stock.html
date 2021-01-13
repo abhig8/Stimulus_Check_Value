@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Tesla{% endblock %}
+
+{% block content %}
+<h1 style="padding-top: 25px";>{{ stock_name }} </h1>
+<h2 style="padding-bottom: 10px"> ({{ stock_ticker }}) </h2>
+<h1> ${{ stock_price }}</h1>
+<h3 style="padding-bottom: 20px"> 
+	{% if percentage > 0 %} 
+		+{{ percentage }}%
+	{% elif percentage == 0 %}
+		{{ percentage }}% Change
+	{% else %}
+		-{{ 100 - percentage }}%
+	{% endif %}
+</h3>
+<p>As of {{ last_updated }}</p>
+<p>*Showing value based off of $1200 investment on April 15, 2020.*</p>
+
+{% endblock %}
+
+<! figure out how to add logos>
