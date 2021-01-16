@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
 from datetime import datetime
-from src.stock_info import ticker_investment
+from .stock_info import ticker_investment
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 app = Flask(__name__)
@@ -44,7 +44,7 @@ def get_standard_time(date_time):
 	return date + " @ " + time
 
 def top_stocks(number):
-	recent_stocks = Stock.query.order_by(*[Stock.id.desc(), Stock.price.asc()]).limit(len(ticker_investment)).all()
+	recent_stocks = Stock.query.order_by(Stock.id.desc()).limit(len(ticker_investment)-1).all()
 	recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
 	card_values = []
 	for x in range(number):
@@ -71,8 +71,7 @@ def stock(stock_ticker):
 		return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_ticker, 
 		stock_price = "{:,.2f}".format(price), last_updated = get_standard_time(stock_data.updated),
 		percentage = int((price-1200)/12))
-	except Exception as e:
-		print(e)
+	except:
 		return redirect(url_for("home"))
 
 
@@ -83,12 +82,12 @@ def search():
 
 @app.route("/overview")
 def overview():
-	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
+	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)-1))
 
 
-if __name__ == "__main__":
-	app.run(debug=False)
-	# app.run()
+# if __name__ == "__main__":
+# 	app.run(debug=False)
+# 	# app.run()
 
 
 

@@ -5,7 +5,7 @@ from datetime import datetime
 import sqlite3
 import schedule
 import time as clock
-from src.stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
+from .stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 # import matplotlib.pyplot as plt
 
 key = "D4F5YPURJ2JVLALQ"
@@ -29,8 +29,8 @@ conn = sqlite3.connect('stock.db')
 c = conn.cursor()
 
 def total_update():
+	print("\n\n\n\nhere")
 	new_data = update_stocks()+update_cryptos()
-	# new_data.sort(key=lambda x: float(x[-1]))
 	for investment in new_data:
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
 	conn.commit()
@@ -78,10 +78,10 @@ def update_cryptos():
 # 		clock.sleep(12)
 # 	conn.commit()
 
-schedule.every().day.at("20:00").do(total_update)
+schedule.every().day.at("11:09").do(total_update)
 
-# total_update()
+#total_update()
 
-while 1:
-	schedule.run_pending()
+# while 1:
+# 	schedule.run_pending()
 

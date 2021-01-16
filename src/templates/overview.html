@@ -19,25 +19,29 @@
       		<th scope="col">Percent Change</th>
     	</tr>
     </thead>
-    <tbody>
-	{% for investment in investment_list%}
-		<tr style="vertical-align: middle";>
+  <tbody>
+	  {% for investment in investment_list%}
+		  <tr style="vertical-align: middle";>
         	<td>
-        		<a href="{{ investment[1] }}" style="font-size: 16px" class="btn btn-secondary btn-xs active" role="button" aria-pressed="true">{{investment[1]}}</a>
+        		<a href="{{ investment[1] }}" style="font-size: 16px; width:75px; text-align: center;" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">{{investment[1]}}</a>
         	</td>
         	<td>{{ investment[0] }}</td>
         	<td>${{ investment[2] }}</td>
         	<td>
             {% if investment[3] > 0 %} 
-              +{{ investment[3] }}%
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+              </svg>{{ investment[3] }}%
             {% elif investment[3] == 0 %}
-              {{ investment[3] }}% Change
+              0% 
             {% else %}
-              -{{ 100 - investment[3] }}%
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                </svg>{{ 100 - investment[3] }}%
             {% endif %}
           </td>
 	    </tr>
-	{% endfor %}
-    </tbody>
+    {% endfor %}
+  </tbody>
 </table>
 {% endblock %}
