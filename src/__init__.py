@@ -15,7 +15,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# need to figure out how to update check_number here upon drop down click and displaying different dates on pages
 check_number = 0
 
 class Stock(db.Model):
@@ -44,7 +43,7 @@ def get_standard_time(date_time):
 	return date + " @ " + time
 
 def top_stocks(number):
-	recent_stocks = Stock.query.order_by(Stock.id.desc()).limit(len(ticker_investment)-1).all()
+	recent_stocks = Stock.query.order_by(Stock.id.desc()).limit(len(ticker_investment)).all()
 	recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
 	card_values = []
 	for x in range(number):
@@ -82,7 +81,7 @@ def search():
 
 @app.route("/overview")
 def overview():
-	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)-1))
+	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
 
 
 # if __name__ == "__main__":

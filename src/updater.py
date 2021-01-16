@@ -5,7 +5,7 @@ from datetime import datetime
 import sqlite3
 import schedule
 import time as clock
-from .stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
+from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 # import matplotlib.pyplot as plt
 
 key = "D4F5YPURJ2JVLALQ"
@@ -29,7 +29,6 @@ conn = sqlite3.connect('stock.db')
 c = conn.cursor()
 
 def total_update():
-	print("\n\n\n\nhere")
 	new_data = update_stocks()+update_cryptos()
 	for investment in new_data:
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
@@ -51,36 +50,13 @@ def update_cryptos():
 		latest_date = (list(data[0].keys())[0]).strip()
 		price = float(list(data[0].values())[0].get("2a. high (USD)"))
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		# first_check = "{0:.2f}".format(first_check) + " " + str(int((first_check-1200/12)))
 		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 00:00:00", first_check])
 		clock.sleep(12)
 	return crypto_list
 
-# def update_stocks():
-# 	for ticker in ticker_stock.keys():
-# 		data = time.get_intraday(symbol=ticker, interval="1min", outputsize = "comapct")
-# 		latest_time = (list(data[0].keys())[0]).strip()
-# 		price = list(data[0].values())[0].get("1. open")
-#		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-# 		item = [ticker, ticker_stock.get(ticker), price, latest_time, first_check]
-# 		c.execute('insert into stock (ticker, stock, price, updated) values (?,?,?,?, ?)', item)
-# 		clock.sleep(12)
-# 	conn.commit()
-# def update_cryptos():
-# 	for ticker in ticker_crypto.keys():
-# 		data = cc.get_digital_currency_daily(symbol=ticker, market='USD')
-# 		latest_date = (list(data[0].keys())[0]).strip()
-# 		price = list(data[0].values())[0].get("2a. high (USD)")
-#		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-# 		item = [ticker, ticker_crypto.get(ticker), price, latest_date + " 00:00:00", first_check]
-# 		c.execute('insert into stock (ticker, stock, price, updated) values (?,?,?,?,?)', item)
-# 		conn.commit()
-# 		clock.sleep(12)
-# 	conn.commit()
+schedule.every().day.at("20:00").do(total_update)
 
-schedule.every().day.at("11:09").do(total_update)
-
-#total_update()
+total_update()
 
 # while 1:
 # 	schedule.run_pending()
