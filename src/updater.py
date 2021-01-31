@@ -8,7 +8,7 @@ import time as clock
 from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 # import matplotlib.pyplot as plt
 
-key = "D4F5YPURJ2JVLALQ"
+key = "POK3LC990DZ9598A"
 
 # #testing output
 # time = TimeSeries(key=key, output_format="pandas")
@@ -30,9 +30,11 @@ c = conn.cursor()
 
 def total_update():
 	new_data = update_stocks()+update_cryptos()
+	new_data = update_stocks()
 	for investment in new_data:
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
 	conn.commit()
+	print("done")
 def update_stocks():
 	stock_list = []
 	for ticker in ticker_stock.keys():
@@ -41,6 +43,7 @@ def update_stocks():
 		price = float(list(data[0].values())[0].get("1. open"))
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
+		return stock_list
 		clock.sleep(12)
 	return stock_list
 def update_cryptos():
@@ -54,7 +57,7 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-schedule.every().day.at("15:21").do(total_update)
+schedule.every().day.at("02:40").do(total_update)
 
 
 while 1:
