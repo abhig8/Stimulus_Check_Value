@@ -5,7 +5,7 @@ from datetime import datetime
 import sqlite3
 import schedule
 import time as clock
-from .stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
+from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 # import matplotlib.pyplot as plt
 
 key = "D4F5YPURJ2JVLALQ"
@@ -54,7 +54,7 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-schedule.every().day.at("11:50").do(total_update)
+schedule.every().day.at("15:02").do(total_update)
 
 
 while 1:
