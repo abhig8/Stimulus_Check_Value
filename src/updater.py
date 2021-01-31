@@ -25,7 +25,7 @@ cc = CryptoCurrencies(key=key)
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
-conn = sqlite3.connect('src/stock.db')
+conn = sqlite3.connect('stock.db')
 c = conn.cursor()
 
 def total_update():
@@ -54,7 +54,7 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-schedule.every().day.at("15:14").do(total_update)
+schedule.every().day.at("15:21").do(total_update)
 
 
 while 1:
