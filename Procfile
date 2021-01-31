@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT wsgi:app worker: python src/updater.py
+worker: python src/updater.py web: gunicorn --bind 0.0.0.0:$PORT wsgi:app
