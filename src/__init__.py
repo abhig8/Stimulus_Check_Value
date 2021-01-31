@@ -71,13 +71,16 @@ def stock(stock_ticker):
 		stock_price = "{:,.2f}".format(price), last_updated = get_standard_time(stock_data.updated),
 		percentage = int((price-1200)/12))
 	except:
-		return redirect(url_for("home"))
+		return error(stock_ticker)
 
 
 @app.route("/search")
 def search():
-	return stock(request.args.get("q"))
+	return stock(request.args.get("q").upper())
 
+@app.route("/error/<stock_ticker>")
+def error(stock_ticker):
+	return render_template("error.html", error_stock=stock_ticker)
 
 @app.route("/overview")
 def overview():

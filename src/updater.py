@@ -29,6 +29,7 @@ conn = sqlite3.connect('stock.db')
 c = conn.cursor()
 
 def total_update():
+	print("\n\n\n\nhere\n\n\n\n")
 	new_data = update_stocks()+update_cryptos()
 	for investment in new_data:
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
@@ -56,8 +57,7 @@ def update_cryptos():
 
 schedule.every().day.at("20:00").do(total_update)
 
-total_update()
 
-# while 1:
-# 	schedule.run_pending()
+while 1:
+	schedule.run_pending()
 
