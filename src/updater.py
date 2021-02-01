@@ -73,7 +73,9 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-schedule.every().day.at("22:10").do(total_update)
+print("inside correct file")
+
+schedule.every().day.at("22:13").do(total_update)
 
 while 1:
 	schedule.run_pending()
