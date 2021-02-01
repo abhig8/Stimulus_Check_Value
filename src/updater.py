@@ -46,6 +46,7 @@ c = conn.cursor()
 # 		return stock_list
 
 def total_update():
+	print("starting...")
 	new_data = update_stocks()+update_cryptos()
 	for investment in new_data:
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
