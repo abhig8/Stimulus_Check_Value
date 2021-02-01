@@ -1,16 +1,16 @@
 
 
-tickers = ["TSLA", "GOOGL", "AAPL", "PTON", "FB", "AMZN", "NFLX", "BTC", "ETH", "DOGE", "XRP", "LTC", "GME"]
+tickers = ["TSLA", "GOOGL", "AAPL", "PTON", "FB", "AMZN", "NFLX", "BTC", "ETH", "DOGE", "XRP", "LTC", "GME", "AMC"]
 
 ticker_stock = {"TSLA": "TESLA", "GOOGL": "GOOGLE", "AAPL": "APPLE", "PTON": "PELOTON",
- "FB": "FACEBOOK", "AMZN": "AMAZON", "NFLX": "NETFLIX", "GME": "GAMESTOP"}
+ "FB": "FACEBOOK", "AMZN": "AMAZON", "NFLX": "NETFLIX", "GME": "GAMESTOP", "AMC": "AMC THEATRES"}
 ticker_crypto = {"BTC": "BITCOIN", "ETH": "ETHEREUM", "DOGE": "DOGECOIN", "XRP": "RIPPLE", "LTC": "LITECOIN"}
 
 ticker_investment = {**ticker_stock, **ticker_crypto}
 
 tickers_second = list(ticker_stock.keys()) + list(ticker_crypto.keys())
 
-prices_april = [130.19, 1210.41, 68.31, 31.99, 174.79, 2168.87, 396.72, 6861.21, 156.62, .0020, .1877, 41.20, 5.27]
+prices_april = [130.19, 1210.41, 68.31, 31.99, 174.79, 2168.87, 396.72, 6861.21, 156.62, .0020, .1877, 41.20, 5.27, 2.41]
 
 prices_december = []
 

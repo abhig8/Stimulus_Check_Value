@@ -74,7 +74,8 @@ def update_cryptos():
 
 schedule.every().day.at("21:33").do(total_update)
 
+total_update()
 
-while 1:
+while 0:
 	schedule.run_pending()
 

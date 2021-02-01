@@ -47,6 +47,7 @@ def top_stocks(number):
 	recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
 	card_values = []
 	for x in range(number):
+		print(recent_stocks[x].ticker)
 		if not check_number:
 			price = float(recent_stocks[x].first_check)
 		else:
