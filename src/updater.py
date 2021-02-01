@@ -6,6 +6,7 @@ import sqlite3
 import schedule
 import time as clock
 from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
+import os
 # import matplotlib.pyplot as plt
 
 API_KEY = "POK3LC990DZ9598A"
@@ -25,27 +26,11 @@ cc = CryptoCurrencies(key=API_KEY)
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
-conn = sqlite3.connect('.stock.db')
+conn = sqlite3.connect(os.path.realpath('src/stock.db'))
 c = conn.cursor()
 
-def total_update():
-	new_data = update_stocks()
-	for investment in new_data:
-		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
-	conn.commit()
-	print("done")
-def update_stocks():
-	stock_list = []
-	for ticker in ticker_stock.keys():
-		data = time.get_intraday(symbol=ticker, interval="1min", outputsize = "comapct")
-		latest_time = (list(data[0].keys())[0]).strip()
-		price = float(list(data[0].values())[0].get("1. open"))
-		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
-		return stock_list
-
 # def total_update():
-# 	new_data = update_stocks()+update_cryptos()
+# 	new_data = update_stocks()
 # 	for investment in new_data:
 # 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
 # 	conn.commit()
@@ -58,20 +43,36 @@ def update_stocks():
 # 		price = float(list(data[0].values())[0].get("1. open"))
 # 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 # 		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
-# 		clock.sleep(12)
-# 	return stock_list
-# def update_cryptos():
-# 	crypto_list = []
-# 	for ticker in ticker_crypto.keys():
-# 		data = cc.get_digital_currency_daily(symbol=ticker, market='USD')
-# 		latest_date = (list(data[0].keys())[0]).strip()
-# 		price = float(list(data[0].values())[0].get("2a. high (USD)"))
-# 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-# 		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 00:00:00", first_check])
-# 		clock.sleep(12)
-# 	return crypto_list
+# 		return stock_list
 
-schedule.every().day.at("09:22").do(total_update)
+def total_update():
+	new_data = update_stocks()+update_cryptos()
+	for investment in new_data:
+		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+	conn.commit()
+	print("done")
+def update_stocks():
+	stock_list = []
+	for ticker in ticker_stock.keys():
+		data = time.get_intraday(symbol=ticker, interval="1min", outputsize = "comapct")
+		latest_time = (list(data[0].keys())[0]).strip()
+		price = float(list(data[0].values())[0].get("1. open"))
+		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
+		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
+		clock.sleep(12)
+	return stock_list
+def update_cryptos():
+	crypto_list = []
+	for ticker in ticker_crypto.keys():
+		data = cc.get_digital_currency_daily(symbol=ticker, market='USD')
+		latest_date = (list(data[0].keys())[0]).strip()
+		price = float(list(data[0].values())[0].get("2a. high (USD)"))
+		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
+		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 00:00:00", first_check])
+		clock.sleep(12)
+	return crypto_list
+
+schedule.every().day.at("21:33").do(total_update)
 
 
 while 1:
