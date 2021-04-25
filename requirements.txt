@@ -10,3 +10,4 @@ Flask-SQLAlchemy==2.1
 alpha_vantage==2.3
 schedule==0.5.0
 pandas==1.2.1
+psycopg2==2.8.6
