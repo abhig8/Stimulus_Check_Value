@@ -10,7 +10,9 @@ app = Flask(__name__)
 
 db_name = "stock.db"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -24,6 +26,13 @@ class Stock(db.Model):
     price = db.Column(db.Float)
     updated = db.Column(db.String())
     first_check = db.Column(db.String())
+
+    def __init__(self, ticker, stock, price, updated, first_check):
+    	self.ticker = ticker
+    	self.stock = stock
+    	self.price = price
+    	self.updated = updated
+    	self.first_check = first_check
 
 def get_standard_time(date_time):
 	date = datetime.strptime(date_time[:10], '%Y-%m-%d').strftime('%m-%d-%Y')

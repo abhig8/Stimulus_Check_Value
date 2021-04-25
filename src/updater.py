@@ -2,11 +2,13 @@ import pandas
 from alpha_vantage.timeseries import TimeSeries 
 from alpha_vantage.cryptocurrencies import CryptoCurrencies
 from datetime import datetime
-import sqlite3
+# import sqlite3
 import schedule
 import time as clock
 from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 import os
+import psycopg2
+
 # import matplotlib.pyplot as plt
 
 API_KEY = "POK3LC990DZ9598A"
@@ -26,7 +28,9 @@ cc = CryptoCurrencies(key=API_KEY)
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
-conn = sqlite3.connect(os.path.realpath('src/stock.db'))
+DATABASE_URL = os.environ['postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+#conn = sqlite3.connect(os.path.realpath('src/stock.db'))
 c = conn.cursor()
 
 # def total_update():
@@ -73,10 +77,10 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-# total_update()
+total_update()
 
-schedule.every().day.at("15:25").do(total_update)
+# schedule.every().day.at("15:25").do(total_update)
 
-while 1:
-	schedule.run_pending()
+# while 1:
+# 	schedule.run_pending()
 
