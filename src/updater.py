@@ -77,10 +77,10 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-total_update()
+#total_update()
 
-# schedule.every().day.at("15:25").do(total_update)
+schedule.every().day.at("15:45").do(total_update)
 
-# while 1:
-# 	schedule.run_pending()
+while 1:
+	schedule.run_pending()
 
