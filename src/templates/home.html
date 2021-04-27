@@ -18,15 +18,15 @@
 						<p style="margin-bottom: 0">${{ card[2] }}</p>
 						<p style="margin-bottom: 0">
 							{% if card[3] > 0 %} 
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
 					               <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-					            </svg>{{ card[3] }}%
+					            </svg><span style="color: Green">{{ card[3] }}%</span>
 							{% elif card[3] == 0 %}
 								0%
 							{% else %}
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
-  									<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-								</svg>{{ 100 - card[3] }}%
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+  									<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"a/>
+								</svg><span style="color: Red">{{ 100 - card[3] }}%</span>
 							{% endif %}
 						</p>
 			 		</div>
@@ -46,15 +46,15 @@
 						<p style="margin-bottom: 0">${{ card[2] }}</p>
 						<p style="margin-bottom: 0">
 							{% if card[3] > 0 %} 
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
 					               <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-					            </svg>{{ card[3] }}%
+					            </svg><span style="color: Green">{{ card[3] }}%</span>
 							{% elif card[3] == 0 %}
 								0%
 							{% else %}
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
   									<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-								</svg>{{ 100 - card[3] }}%
+								</svg><span style="color: Red">{{ 100 - card[3] }}%</span>
 							{% endif %}
 						</p>
 			 		</div>

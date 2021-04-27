@@ -4,16 +4,18 @@
 {% block content %}
 <h1 style="padding-top: 25px";>{{ stock_name }} </h1>
 <h2 style="padding-bottom: 10px"> ({{ stock_ticker }}) </h2>
-<h1> ${{ stock_price }}</h1>
+<h1> ${{ stock_price }} USD</h1>
 <h3 style="padding-bottom: 20px"> 
 	{% if percentage > 0 %} 
-		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 10 20">
+		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-arrow-up" viewBox="0 0 10 20">
         	<path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-        </svg>{{ percentage }}%
+        </svg><span style="color: Green">{{ percentage }}%</span>
 	{% elif percentage == 0 %}
-		{{ percentage }}% Change
+		No Change
 	{% else %}
-		-{{ 100 - percentage }}%
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+			<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+		</svg><span style="color: Red">{{ 100 - percentage }}%</span>
 	{% endif %}
 </h3>
 <p>As of {{ last_updated }}</p>
