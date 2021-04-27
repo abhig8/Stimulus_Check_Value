@@ -28,7 +28,8 @@ cc = CryptoCurrencies(key=API_KEY)
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
-DATABASE_URL = os.environ['postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i']
+DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = "postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #conn = sqlite3.connect(os.path.realpath('src/stock.db'))
 c = conn.cursor()
@@ -53,7 +54,8 @@ def total_update():
 	print("starting...")
 	new_data = update_stocks()+update_cryptos()
 	for investment in new_data:
-		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+		# c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
 	conn.commit()
 	print("done")
 def update_stocks():
@@ -77,9 +79,9 @@ def update_cryptos():
 		clock.sleep(12)
 	return crypto_list
 
-#total_update()
+# total_update()
 
-schedule.every().day.at("15:45").do(total_update)
+schedule.every().day.at("20:00").do(total_update)
 
 while 1:
 	schedule.run_pending()
