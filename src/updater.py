@@ -24,7 +24,8 @@ API_KEY = "POK3LC990DZ9598A"
 time = TimeSeries(key=API_KEY)
 cc = CryptoCurrencies(key=API_KEY)
 
-# data = time.get_intraday(symbol="GOOGL", interval="1min", outputsize = "comapct")
+# data = time.get_intraday(symbol="CSCO", interval="1min", outputsize = "comapct")
+# print(data)
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
@@ -81,7 +82,7 @@ def update_cryptos():
 
 # total_update()
 
-schedule.every().day.at("22:00").do(total_update)
+schedule.every().day.at("23:00").do(total_update)
 
 while 1:
 	schedule.run_pending()
