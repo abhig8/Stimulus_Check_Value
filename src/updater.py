@@ -76,13 +76,13 @@ def update_cryptos():
 		latest_date = (list(data[0].keys())[0]).strip()
 		price = float(list(data[0].values())[0].get("2a. high (USD)"))
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 00:00:00", first_check])
+		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 21:00:00", first_check])
 		clock.sleep(12)
 	return crypto_list
 
 # total_update()
 
-schedule.every().day.at("23:00").do(total_update)
+schedule.every().day.at("21:00").do(total_update)
 
 while 1:
 	schedule.run_pending()
