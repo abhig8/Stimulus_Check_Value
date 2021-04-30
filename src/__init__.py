@@ -1,8 +1,6 @@
 from flask import Flask, render_template, session, request, url_for, redirect
-from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
-from datetime import datetime
 from .stock_info import ticker_investment
 import os
 from sqlalchemy.orm.attributes import InstrumentedAttribute

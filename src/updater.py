@@ -1,7 +1,6 @@
-import pandas
+# import pandas
 from alpha_vantage.timeseries import TimeSeries 
 from alpha_vantage.cryptocurrencies import CryptoCurrencies
-from datetime import datetime
 # import sqlite3
 import schedule
 import time as clock
@@ -51,6 +50,9 @@ c = conn.cursor()
 # 		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
 # 		return stock_list
 
+
+update_time = "21:00"
+
 def total_update():
 	print("starting...")
 	new_data = update_stocks()+update_cryptos()
@@ -76,13 +78,13 @@ def update_cryptos():
 		latest_date = (list(data[0].keys())[0]).strip()
 		price = float(list(data[0].values())[0].get("2a. high (USD)"))
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " 21:00:00", first_check])
+		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " " + update_time + ":00", first_check])
 		clock.sleep(12)
 	return crypto_list
 
 # total_update()
 
-schedule.every().day.at("21:00").do(total_update)
+schedule.every().day.at(update_time).do(total_update)
 
 while 1:
 	schedule.run_pending()
