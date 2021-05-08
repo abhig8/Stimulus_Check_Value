@@ -5,7 +5,7 @@
 <h1 style="padding-top: 25px";>{{ stock_name }} </h1>
 <h2 style="padding-bottom: 10px"> ({{ stock_ticker }}) </h2>
 <h1> ${{ stock_price }} USD</h1>
-<h3 style="padding-bottom: 20px"> 
+<h3 style="padding-bottom: 10px"> 
 	{% if percentage > 0 %} 
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-arrow-up" viewBox="0 0 10 20">
         	<path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
@@ -18,8 +18,8 @@
 		</svg><span style="color: Red">{{ 100 - percentage }}%</span>
 	{% endif %}
 </h3>
-<p>As of {{ last_updated }}</p>
-<p>*Showing value based off of $1200 investment on April 15, 2020.*</p>
+<h6 style = "padding-bottom: 10px">As of {{ last_updated }}</h6>
+<p>Possible value of $1200 investment on April 15, 2020</p>
 
 {% endblock %}
 

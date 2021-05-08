@@ -87,6 +87,8 @@ def stock(stock_ticker):
 		stock_price = "{:,.2f}".format(price), last_updated = get_standard_time(stock_data.updated),
 		percentage = int((price-1200)/12))
 	except:
+		if(stock_ticker in ticker_investment.values()):
+			return stock(list(ticker_investment.keys())[list(ticker_investment.values()).index(stock_ticker)])
 		return error(stock_ticker)
 
 @app.route("/search")

@@ -8,7 +8,7 @@ ticker_crypto = {"BTC": "BITCOIN", "ETH": "ETHEREUM", "DOGE": "DOGECOIN", "XRP":
 
 ticker_investment = {**ticker_stock, **ticker_crypto}
 
-tickers_second = list(ticker_stock.keys()) + list(ticker_crypto.keys())
+ticker_investment_second = list(ticker_stock.keys()) + list(ticker_crypto.keys())
 
 prices_april = [130.19, 1210.41, 68.31, 31.99, 174.79, 2168.87, 396.72, 6861.21, 156.62, .0020, .1877, 41.20, 5.27, 2.41]
 
