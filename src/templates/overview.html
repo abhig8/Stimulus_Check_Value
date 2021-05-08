@@ -24,7 +24,7 @@
 	  {% for investment in investment_list%}
   		  <tr onclick="window.location='{{ investment[1] }}';" style="vertical-align: middle";>
           	<td>
-              <img src="{{ url_for('static', filename='assets/img/'+investment[0]+'-logo.PNG') }}" style="max-width:140px; max-height:55px">
+              <img src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" style="max-width:140px; max-height:55px">
             </td>
             <td>
           		<a href="{{ investment[1] }}" style="font-size: 16px; width:75px; text-align: center;" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">{{investment[1]}}</a>
