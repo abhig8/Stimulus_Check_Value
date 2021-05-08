@@ -63,7 +63,7 @@ def top_stocks(number):
 			price = float(recent_stocks[x].first_check)
 		else:
 			price = float(recent_stocks[x].second_check)
-		card_values.append([recent_stocks[x].stock, recent_stocks[x].ticker, "{:,.2f}".format(price), int((price-1200)/12)])
+		card_values.append([recent_stocks[x].stock.lower(), recent_stocks[x].ticker, "{:,.2f}".format(price), int((price-1200)/12)])
 	return card_values
 
 # @app.route("/")
