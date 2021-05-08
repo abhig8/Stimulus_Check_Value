@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Overview{% endblock %}
+{% block title %}Stimmy Checkz {% endblock %}
 
 {% block content %}
-<h1 style="padding: 25px";>Overview</h1>
-<p style="margin-bottom: 0px";>*Choose Investments from Dropdowns and search for Tickers in Search Bar*</p>
-
+<h1 style="padding: 25px";>Stimmy Checkz Home</h1>
+<p style="margin-bottom: 0px";>Choose Investments from Dropdowns and search for Tickers in Search Bar</p>
 <br>
-<p style="margin-bottom: 5px";>*Showing value based off of $1200 investment on April 15, 2020.*</p>
+<p style="margin-bottom: 5px";>Showing value based off of $1200 investment on April 15, 2020.</p>
+<br>
 <p>Click on ticker button to navigate to investment.</p>
 
-<table style="text-align: center"; class="table">
+<table style="text-align: center"; class="table table-hover">
 	<thead>
     	<tr>
+          <th scope="col">Logo</th>
       		<th scope="col">Ticker</th>
       		<th scope="col">Investment</th>
       		<th scope="col">Value</th>
@@ -21,26 +22,29 @@
     </thead>
   <tbody>
 	  {% for investment in investment_list%}
-		  <tr style="vertical-align: middle";>
-        	<td>
-        		<a href="{{ investment[1] }}" style="font-size: 16px; width:75px; text-align: center;" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">{{investment[1]}}</a>
-        	</td>
-        	<td>{{ investment[0] }}</td>
-        	<td>${{ investment[2] }}</td>
-        	<td>
-            {% if investment[3] > 0 %} 
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
-                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-              </svg><span style="color: Green">{{ investment[3] }}%</span>
-            {% elif investment[3] == 0 %}
-              0% 
-            {% else %}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
-                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                </svg><span style="color: Red">{{ 100 - investment[3] }}%</span>
-            {% endif %}
-          </td>
-	    </tr>
+  		  <tr onclick="window.location='{{ investment[1] }}';" style="vertical-align: middle";>
+          	<td>
+              <img src="{{ url_for('static', filename='assets/img/'+investment[0]+'-logo.png') }}" style="max-width:140px; max-height:55px">
+            </td>
+            <td>
+          		<a href="{{ investment[1] }}" style="font-size: 16px; width:75px; text-align: center;" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">{{investment[1]}}</a>
+          	</td>
+          	<td>{{ investment[0] }}</td>
+          	<td>${{ investment[2] }}</td>
+          	<td>
+              {% if investment[3] > 0 %} 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                </svg><span style="color: Green">{{ investment[3] }}%</span>
+              {% elif investment[3] == 0 %}
+                0% 
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+                      <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                  </svg><span style="color: Red">{{ 100 - investment[3] }}%</span>
+              {% endif %}
+            </td>
+  	    </tr>
     {% endfor %}
   </tbody>
 </table>

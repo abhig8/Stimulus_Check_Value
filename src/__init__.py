@@ -6,7 +6,7 @@ from .stock_info import ticker_investment
 import os
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "templates", static_folder = "static")
 
 # db_name = "stock.db"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
@@ -66,10 +66,14 @@ def top_stocks(number):
 		card_values.append([recent_stocks[x].stock, recent_stocks[x].ticker, "{:,.2f}".format(price), int((price-1200)/12)])
 	return card_values
 
+# @app.route("/")
+# def home():
+# 	top = top_stocks(8)
+# 	return render_template("home.html", top_4 = top[:4], last_4 = top[4:])
+
 @app.route("/")
 def home():
-	top = top_stocks(8)
-	return render_template("home.html", top_4 = top[:4], last_4 = top[4:])
+	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
 
 @app.route("/<stock_ticker>")
 def stock(stock_ticker):
@@ -85,7 +89,6 @@ def stock(stock_ticker):
 	except:
 		return error(stock_ticker)
 
-
 @app.route("/search")
 def search():
 	return stock(request.args.get("q").upper())
@@ -94,9 +97,9 @@ def search():
 def error(stock_ticker):
 	return render_template("error.html", error_stock=stock_ticker)
 
-@app.route("/overview")
-def overview():
-	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
+# @app.route("/overview")
+# def overview():
+# 	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
 
 
 # if __name__ == "__main__":
