@@ -3,33 +3,42 @@
 {% block title %}Stimmy Checkz {% endblock %}
 
 {% block content %}
-<h1 style="padding: 25px";>Stimmy Checkz Home</h1>
-<h4 style="margin-bottom: 10px";>Displaying the possible values of a $1200 investment on April 15, 2020</h4>
+<h1 style="padding: 25px";>
+  <img 
+    height="125px" 
+            src="{{ url_for('static', filename='assets/img/favicon.png') }}"
+            />
+  Stimmy Checkz
+  <img 
+    height="125px" 
+            src="{{ url_for('static', filename='assets/img/favicon.png') }}"
+            />
+</h1>
+<h4 style="margin-bottom: 10px";>Displaying the possible values of a $1200 investment made on April 15, 2020</h4>
 <h5>Stimulus Check Date #1</h5>
 <br>
 <p>Choose Investments from Dropdowns, Search for Investment Tickers, or Click on a Row</p>
 <br>
 <div class="container">
-  <table style="text-align: center"; class="table table-hover">
+  <table id="stocks" style="text-align: center" class="table table-hover">
   	<thead>
     	<tr>
-          <th scope="col">Logo</th>
-      		<th scope="col">Ticker</th>
-      		<th scope="col">Investment</th>
-      		<th scope="col">Value</th>
-      		<th scope="col">Percent Change</th>
+          <th>Investment</th>
+      		<th>Value</th>
+      		<th>Percent Change</th>
     	</tr>
     </thead>
     <tbody>
   	  {% for investment in investment_list%}
-  		  <tr onclick="window.location='{{ investment[1] }}';" style="vertical-align: middle";>
-          	<td>
-              <img src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" style="max-width:140px; max-height:55px">
-            </td>
+  		  <tr onclick="window.location='{{ investment[1] }}';" style="vertical-align: middle;">
             <td>
-          		<a href="{{ investment[1] }}" style="font-size: 16px; width:75px; text-align: center;" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">{{investment[1]}}</a>
-          	</td>
-          	<td>{{ investment[0]| upper }}</td>
+              <img
+                style="max-width:100px; max-height:35px"
+                src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
+               />
+               {{ investment[0] | upper }}
+               <font size="-1" color="#808A9D">{{investment[1]}}</font>
+            </td>
           	<td>${{ investment[2] }}</td>
           	<td>
               {% if investment[3] > 0 %} 
@@ -49,4 +58,14 @@
     </tbody>
   </table>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('#stocks').DataTable({
+      "paging": false
+    });
+  });
+</script>
+
 {% endblock %}
