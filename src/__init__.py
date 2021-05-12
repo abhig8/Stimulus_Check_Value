@@ -81,8 +81,8 @@ def stock(stock_ticker):
 		stock_data = Stock.query.filter_by(ticker=stock_ticker).order_by(Stock.id.desc()).first()
 		if not check_number:
 			price = float(stock_data.first_check)
-		else:
-			price = float(stock_data.second_check)
+		# else:
+		# 	price = float(stock_data.second_check)
 		return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_ticker, 
 		stock_price = "{:,.2f}".format(price), last_updated = get_standard_time(stock_data.updated),
 		percentage = int((price-1200)/12))

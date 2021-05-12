@@ -17,7 +17,7 @@
 <h4 style="margin-bottom: 10px";>Displaying the possible values of a $1200 investment made on April 15, 2020</h4>
 <h5>Stimulus Check Date #1</h5>
 <br>
-<p>Choose Investments from Dropdowns, Search for Investment Tickers, or Click on a Row</p>
+<p>Choose Investments from Dropdowns, Search for Investments, Click on a Row, Interact with the table</p>
 <br>
 <div class="container" style="width: 50%">
   <table id="stocks" style="vertical-align: middle; width:100%; text-align: left;" class="table table-hover">
@@ -34,7 +34,7 @@
             <td style="padding-left:10px">
               <img
                 style="max-width:100px; max-height:35px;"
-                src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo copy.png') }}" 
+                src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
                />
                {{ investment[0] | upper }}
                <font size="-1" color="#808A9D">{{investment[1]}}</font>
@@ -69,6 +69,7 @@
       {'width': '100', 'targets': 1},
       {'width': '100', 'targets': 2}
       ],
+      "order": [[ 1, "desc" ]],
     });
   });
 </script>
