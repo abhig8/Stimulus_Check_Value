@@ -5,12 +5,12 @@
 {% block content %}
 <h1 style="padding: 25px";>
   <img 
-    height="125px" 
+    height="100px" 
             src="{{ url_for('static', filename='assets/img/favicon.png') }}"
             />
   Stimmy Checkz
   <img 
-    height="125px" 
+    height="100px" 
             src="{{ url_for('static', filename='assets/img/favicon.png') }}"
             />
 </h1>
@@ -19,8 +19,8 @@
 <br>
 <p>Choose Investments from Dropdowns, Search for Investment Tickers, or Click on a Row</p>
 <br>
-<div class="container">
-  <table id="stocks" style="text-align: center" class="table table-hover">
+<div class="container" style="width: 50%">
+  <table id="stocks" style="vertical-align: middle; width:100%; text-align: left;" class="table table-hover">
   	<thead>
     	<tr>
           <th>Investment</th>
@@ -30,10 +30,10 @@
     </thead>
     <tbody>
   	  {% for investment in investment_list%}
-  		  <tr onclick="window.location='{{ investment[1] }}';" style="vertical-align: middle;">
-            <td>
+  		  <tr onclick="window.location='{{ investment[1] }}';">
+            <td style="padding-left:10px">
               <img
-                style="max-width:100px; max-height:35px"
+                style="max-width:100px; max-height:35px;"
                 src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
                />
                {{ investment[0] | upper }}
@@ -63,7 +63,12 @@
 <script>
   $(document).ready(function() {
     $('#stocks').DataTable({
-      "paging": false
+      "paging": false,
+      'columnDefs': [
+      {'width': '270', 'targets': 0},
+      {'width': '100', 'targets': 1},
+      {'width': '100', 'targets': 2}
+      ],
     });
   });
 </script>
