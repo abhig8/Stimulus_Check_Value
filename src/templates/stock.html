@@ -1,9 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Tesla{% endblock %}
+{% block title %}{{ stock_name | title }}{% endblock %}
 
 {% block content %}
-<h1 style="padding-top: 25px";>{{ stock_name }} </h1>
-<h2 style="padding-bottom: 10px"> ({{ stock_ticker }}) </h2>
+<h1 style="padding-top: 25px; margin: 0;">
+	<img
+        style="max-width:150px; max-height:70px;"
+            src="{{ url_for('static', filename='../static/assets/img/'+stock_name+'-logo.png') }}" 
+            />
+	{{ stock_name }}
+	<img
+        style="max-width:150px; max-height:70px;"
+            src="{{ url_for('static', filename='../static/assets/img/'+stock_name+'-logo.png') }}" 
+            />
+</h1>
+<h3 style="padding-bottom: 10px; padding: 0;"> <font color="#696969">({{ stock_ticker }})</font> </h3>
 <h1> ${{ stock_price }} USD</h1>
 <h3 style="padding-bottom: 10px"> 
 	{% if percentage > 0 %} 
@@ -20,7 +30,18 @@
 </h3>
 <h6 style = "padding-bottom: 10px">As of {{ last_updated }}</h6>
 <p>Possible value of $1200 investment on April 15, 2020</p>
-
+<div id="b" style="position:absolute; top:400px">
+	<img
+	        style="max-width:500px; max-height:200px;"
+	            src="{{ url_for('static', filename='assets/img/favicon.png') }}" 
+	            />
+</div>
 {% endblock %}
-
-<! figure out how to add logos>
+{% block scripts %}
+<script>
+	$(document).ready(function() {
+	    $("#b").animate({left: "+=700"}, 2500);
+	    $("#b").animate({left: "-=500"}, 1500);
+	});
+</script>
+{% endblock %}
