@@ -10,7 +10,7 @@
 	{{ stock_name }}
 	<img
         style="max-width:150px; max-height:70px;"
-            src="{{ url_for('static', filename='../static/assets/img/'+stock_name+'-logo.png') }}" 
+            src="{{ url_for('static', filename='../static/assets/img/'+stock_name | lower+'-logo.png') }}" 
             />
 </h1>
 <h3 style="padding-bottom: 10px; padding: 0;"> <font color="#696969">({{ stock_ticker }})</font> </h3>
