@@ -29,15 +29,15 @@
     <tbody>
   	  {% for investment in investment_list%}
   		  <tr onclick="window.location='{{ investment[1] }}';">
-            <td style="padding-left:10px">
+            <td style="padding-left:10px;">
               <img
-                style="max-width:100px; max-height:35px;"
+                style="max-width:100px; max-height:35px; cursor: pointer;"
                 src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
                />
-               {{ investment[0] | upper }}
-               <font size="-1" color="#808A9D">{{investment[1]}}</font>
+               <font style="cursor: pointer;"> {{ investment[0] | upper }}</font>
+               <font style="cursor: pointer;" size="-1" color="#808A9D">{{investment[1]}}</font>
             </td>
-          	<td>${{ investment[2] }}</td>
+          	<td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
           	<td>
               {% if investment[3] > 0 %} 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
