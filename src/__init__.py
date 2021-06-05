@@ -12,7 +12,7 @@ app = Flask(__name__, template_folder = "templates", static_folder = "static")
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 
 DATABASE_URL = os.environ['DATABASE_URL']
-# DATABASE_URL = ""
+# DATABASE_URL = "postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
