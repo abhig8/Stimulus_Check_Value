@@ -3,12 +3,20 @@
 
 {% block content %}
 <h1 style="padding-top: 25px; margin: 0;">
-	<img
+	<!img
         style="max-width:150px; max-height:70px;"
             src="{{ url_for('static', filename='../static/assets/img/'+stock_name | lower+'-logo.png') }}" 
             />
+    <img
+        style="max-width:150px; max-height:75px;"
+            src= "{{ image_link }}"
+            />
 	{{ stock_name }}
 	<img
+        style="max-width:150px; max-height:75px;"
+            src= "{{ image_link }}"
+            />
+	<!img
         style="max-width:150px; max-height:70px;"
             src="{{ url_for('static', filename='../static/assets/img/'+stock_name | lower+'-logo.png') }}" 
             />
@@ -25,7 +33,7 @@
 	{% else %}
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
 			<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-		</svg><span style="color: Red">{{ 100 - percentage }}%</span>
+		</svg><span style="color: Red">{{ investment[3] | abs }}%</span>
 	{% endif %}
 </h3>
 <h6 style = "padding-bottom: 10px">As of {{ last_updated }}</h6>

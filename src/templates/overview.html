@@ -30,10 +30,14 @@
   	  {% for investment in investment_list%}
   		  <tr onclick="window.location='{{ investment[1] }}';">
             <td style="padding-left:10px;">
-              <img
+              <!img
                 style="max-width:100px; max-height:35px; cursor: pointer;"
                 src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
-               />
+                  />
+              <img 
+                style = "max-width:100px; max-height:45px; cursor: pointer;"
+                        src="{{ investment[4] }}"
+                        />
                <font style="cursor: pointer;"> {{ investment[0] | upper }}</font>
                <font style="cursor: pointer;" size="-1" color="#808A9D">{{investment[1]}}</font>
             </td>
@@ -48,7 +52,7 @@
               {% else %}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
                       <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                  </svg><span style="color: Red">{{ 100 - investment[3] }}%</span>
+                  </svg><span style="color: Red">{{ investment[3] | abs }}%</span>
               {% endif %}
             </td>
   	    </tr>

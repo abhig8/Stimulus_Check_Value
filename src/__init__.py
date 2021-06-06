@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, request, url_for, redirect
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
-from .stock_info import ticker_investment
+from .stock_info import ticker_investment, DATABASE_URL, ticker_stock_image_link
 import os
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
@@ -10,9 +10,6 @@ app = Flask(__name__, template_folder = "templates", static_folder = "static")
 
 # db_name = "stock.db"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
-
-DATABASE_URL = os.environ['DATABASE_URL']
-# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -48,7 +45,7 @@ def top_stocks():
 		else:
 			price = float(price.second_check)
 
-		query.append([stock.lower(), ticker, price, int((price-1200)/12)])
+		query.append([stock.lower(), ticker, price, int((price-1200)/12), ticker_stock_image_link.get(ticker)])
 
 	query.sort(key = lambda x: x[2], reverse = True)
 
@@ -89,7 +86,7 @@ def stock(stock_ticker):
 		# 	price = float(stock_data.second_check)
 		return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_ticker, 
 		stock_price = "{:,.2f}".format(price), last_updated = format_time(stock_data.updated),
-		percentage = int((price-1200)/12))
+		percentage = int((price-1200)/12), image_link = ticker_stock_image_link.get(stock_ticker))
 	except:
 		if(stock_ticker in ticker_investment.values()):
 			return stock(list(ticker_investment.keys())[list(ticker_investment.values()).index(stock_ticker)])

@@ -4,7 +4,7 @@
 # import sqlite3
 import schedule
 import time as clock
-from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
+from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december, DATABASE_URL
 import os
 import psycopg2
 import bs4
@@ -34,8 +34,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 # print(list(data[0].keys())[0])
 # print(float(list(data[0].values())[0].get("1. open")))
 
-DATABASE_URL = os.environ['DATABASE_URL']
-# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #conn = sqlite3.connect(os.path.realpath('src/stock.db'))
 c = conn.cursor()
@@ -74,7 +72,8 @@ def update_stocks():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+		date_time = "06-04-2021 01:00:00 PM PST"
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		stock_list.append([ticker, stock, price, date_time, first_check])
 		# clock.sleep(12)
@@ -103,14 +102,15 @@ def update_cryptos():
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
 	conn.commit()
 
-# total_update()
+update_cryptos()
+update_stocks()
 
 
-scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
-scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
-scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
-scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
-scheduler.start()
+# scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
+# scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
+# scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
+# scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
+# scheduler.start()
 
 # update_time = "12:00"
 
