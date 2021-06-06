@@ -1,16 +1,21 @@
 # import pandas
-from alpha_vantage.timeseries import TimeSeries 
-from alpha_vantage.cryptocurrencies import CryptoCurrencies
+# from alpha_vantage.timeseries import TimeSeries 
+# from alpha_vantage.cryptocurrencies import CryptoCurrencies
 # import sqlite3
 import schedule
 import time as clock
 from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 import os
 import psycopg2
+import bs4
+import requests
+from bs4 import BeautifulSoup
+import datetime
+
 
 # import matplotlib.pyplot as plt
 
-API_KEY = ""
+# API_KEY = ""
 
 # #testing output
 # time = TimeSeries(key=key, output_format="pandas")
@@ -20,8 +25,8 @@ API_KEY = ""
 # data = cc.get_digital_currency_daily(symbol="XRP", market='USD')
 # print(data)
 
-time = TimeSeries(key=API_KEY)
-cc = CryptoCurrencies(key=API_KEY)
+# time = TimeSeries(key=API_KEY)
+# cc = CryptoCurrencies(key=API_KEY)
 
 # data = time.get_intraday(symbol="CSCO", interval="1min", outputsize = "comapct")
 # print(data)
@@ -29,7 +34,7 @@ cc = CryptoCurrencies(key=API_KEY)
 # print(float(list(data[0].values())[0].get("1. open")))
 
 DATABASE_URL = os.environ['DATABASE_URL']
-# DATABASE_URL = "postgres://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #conn = sqlite3.connect(os.path.realpath('src/stock.db'))
 c = conn.cursor()
@@ -51,8 +56,6 @@ c = conn.cursor()
 # 		return stock_list
 
 
-update_time = "21:00"
-
 def total_update():
 	print("starting...")
 	new_data = update_stocks()+update_cryptos()
@@ -63,24 +66,37 @@ def total_update():
 	print("done")
 def update_stocks():
 	stock_list = []
-	for ticker in ticker_stock.keys():
-		data = time.get_intraday(symbol=ticker, interval="1min", outputsize = "comapct")
-		latest_time = (list(data[0].keys())[0]).strip()
-		price = float(list(data[0].values())[0].get("1. open"))
+	for ticker, stock in ticker_stock.items():
+		# data = time.get_intraday(symbol=ticker, interval="1min", outputsize = "comapct")
+		# date_time = (list(data[0].keys())[0]).strip()
+		# price = float(list(data[0].values())[0].get("1. open"))
+		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
+		soup = bs4.BeautifulSoup(url.text, features="html.parser")
+		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
+		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+		date_time = "06-04-2021 @ 01:00:00 PM"
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		stock_list.append([ticker, ticker_stock.get(ticker), price, latest_time, first_check])
-		clock.sleep(12)
+		stock_list.append([ticker, stock, price, date_time, first_check])
+		# clock.sleep(12)
 	return stock_list
 def update_cryptos():
 	crypto_list = []
-	for ticker in ticker_crypto.keys():
-		data = cc.get_digital_currency_daily(symbol=ticker, market='USD')
-		latest_date = (list(data[0].keys())[0]).strip()
-		price = float(list(data[0].values())[0].get("2a. high (USD)"))
+	for ticker, crypto in ticker_crypto.items():
+		# data = cc.get_digital_currency_daily(symbol=ticker, market='USD')
+		# latest_date = (list(data[0].keys())[0]).strip()
+		# price = float(list(data[0].values())[0].get("2a. high (USD)"))
+		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD?p=' + ticker + '-USD')
+		soup = bs4.BeautifulSoup(url.text, features="html.parser")
+		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
+		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+		date_time = "06-04-2021 @ 01:00:00 PM"
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
-		crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " " + update_time + ":00", first_check])
-		clock.sleep(12)
+		crypto_list.append([ticker, crypto, price, date_time, first_check])
+		# clock.sleep(12)
+		# crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " " + update_time + ":00", first_check])
 	return crypto_list
+
+update_time = "12:00"
 
 # total_update()
 
