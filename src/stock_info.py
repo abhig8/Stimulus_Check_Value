@@ -41,16 +41,18 @@ ticker_price_december = { }
 
 # lower_case_stock_links = ["GOOGL", "FB", "AAPL", "CVS", "AMZN", "NFLX", "T"]
 
-# def get_image_link(ticker, stock):
-# 	if ticker.upper() in ticker_crypto.keys():
-# 		return "https://cryptologos.cc/logos/" + stock.replace(" ", "-").lower() + "-" + ticker.lower() + "-logo.png?v=010"
-# 	elif ticker.upper() in lower_case_stock_links:
-# 		return "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
-# 	else:
-# 		return "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
+def get_image_link(ticker, stock):
+	if ticker.upper() in ticker_crypto.keys():
+		if ticker == "XRP":
+			stock = "XRP"
+		return "https://cryptologos.cc/logos/" + stock.replace(" ", "-").lower() + "-" + ticker.lower() + "-logo.png?v=010"
+	elif ticker.upper() in lower_case_stock_links:
+		return "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
+	else:
+		return "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
 
 
-ticker_stock_image_link = {'TSLA': 'https://eodhistoricaldata.com/img/logos/US/TSLA.png', 'GOOGL': 'https://eodhistoricaldata.com/img/logos/US/googl.png', 'AAPL': 'https://eodhistoricaldata.com/img/logos/US/aapl.png', 'PTON': 'https://eodhistoricaldata.com/img/logos/US/PTON.png', 'FB': 'https://eodhistoricaldata.com/img/logos/US/fb.png', 'AMZN': 'https://eodhistoricaldata.com/img/logos/US/amzn.png', 'NFLX': 'https://eodhistoricaldata.com/img/logos/US/nflx.png', 'GME': 'https://eodhistoricaldata.com/img/logos/US/GME.png', 'AMC': 'https://eodhistoricaldata.com/img/logos/US/AMC.png', 'NOK': 'https://eodhistoricaldata.com/img/logos/US/NOK.png', 'KOSS': 'https://eodhistoricaldata.com/img/logos/US/KOSS.png', 'BB': 'https://eodhistoricaldata.com/img/logos/US/BB.png', 'T': 'https://eodhistoricaldata.com/img/logos/US/t.png', 'MSFT': 'https://eodhistoricaldata.com/img/logos/US/MSFT.png', 'TGT': 'https://eodhistoricaldata.com/img/logos/US/TGT.png', 'CVS': 'https://eodhistoricaldata.com/img/logos/US/cvs.png', 'BTC': 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=010', 'ETH': 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=010', 'DOGE': 'https://cryptologos.cc/logos/dogecoin-doge-logo.png?v=010', 'XRP': 'https://cryptologos.cc/logos/ripple-xrp-logo.png?v=010', 'LTC': 'https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=010', 'USDT': 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=010', 'LINK': 'https://cryptologos.cc/logos/chainlink-link-logo.png?v=010', 'ETC': 'https://cryptologos.cc/logos/ethereum-classic-etc-logo.png?v=010', 'BCH': 'https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png?v=010', 'ALGO': 'https://cryptologos.cc/logos/algorand-algo-logo.png?v=010'}
+ticker_stock_image_link = {'TSLA': 'https://eodhistoricaldata.com/img/logos/US/TSLA.png', 'GOOGL': 'https://eodhistoricaldata.com/img/logos/US/googl.png', 'AAPL': 'https://eodhistoricaldata.com/img/logos/US/aapl.png', 'PTON': 'https://eodhistoricaldata.com/img/logos/US/PTON.png', 'FB': 'https://eodhistoricaldata.com/img/logos/US/fb.png', 'AMZN': 'https://eodhistoricaldata.com/img/logos/US/amzn.png', 'NFLX': 'https://eodhistoricaldata.com/img/logos/US/nflx.png', 'GME': 'https://eodhistoricaldata.com/img/logos/US/GME.png', 'AMC': 'https://eodhistoricaldata.com/img/logos/US/AMC.png', 'NOK': 'https://eodhistoricaldata.com/img/logos/US/NOK.png', 'KOSS': 'https://eodhistoricaldata.com/img/logos/US/KOSS.png', 'BB': 'https://eodhistoricaldata.com/img/logos/US/BB.png', 'T': 'https://eodhistoricaldata.com/img/logos/US/t.png', 'MSFT': 'https://eodhistoricaldata.com/img/logos/US/MSFT.png', 'TGT': 'https://eodhistoricaldata.com/img/logos/US/TGT.png', 'CVS': 'https://eodhistoricaldata.com/img/logos/US/cvs.png', 'BTC': 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=010', 'ETH': 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=010', 'DOGE': 'https://cryptologos.cc/logos/dogecoin-doge-logo.png?v=010', 'XRP': 'https://cryptologos.cc/logos/xrp-xrp-logo.png?v=010', 'LTC': 'https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=010', 'USDT': 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=010', 'LINK': 'https://cryptologos.cc/logos/chainlink-link-logo.png?v=010', 'ETC': 'https://cryptologos.cc/logos/ethereum-classic-etc-logo.png?v=010', 'BCH': 'https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png?v=010', 'ALGO': 'https://cryptologos.cc/logos/algorand-algo-logo.png?v=010'}
 
 # ticker_stock_image_link2 = {}
 
