@@ -4,7 +4,7 @@
 # import sqlite3
 import schedule
 import time as clock
-from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december, DATABASE_URL
+from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december
 import os
 import psycopg2
 import bs4

@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, request, url_for, redirect
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
-from .stock_info import ticker_investment, DATABASE_URL, ticker_stock_image_link
+from .stock_info import ticker_investment, ticker_stock_image_link
 import os
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
