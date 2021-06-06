@@ -107,7 +107,7 @@ def update_cryptos():
 
 
 scheduler = BlockingScheduler()
-scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00', timezone = pst)
+scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
 scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
 scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
 scheduler.start()
