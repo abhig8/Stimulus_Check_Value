@@ -39,18 +39,36 @@ class Stock(db.Model):
 def format_time(date_time):
 	return date_time[:10] + " @" + date_time[10:] + " " + "PST"
 
-def top_stocks(number):
-	recent_stocks = Stock.query.order_by(Stock.id.desc()).limit(len(ticker_investment)).all()
-	recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
-	card_values = []
-	for x in range(number):
-		print(recent_stocks[x].ticker)
+def top_stocks():
+	query = []
+	for ticker, stock in ticker_investment.items():
+		price = Stock.query.order_by(Stock.id.desc()).filter_by(ticker=ticker).first()
 		if not check_number:
-			price = float(recent_stocks[x].first_check)
+			price = float(price.first_check)
 		else:
-			price = float(recent_stocks[x].second_check)
-		card_values.append([recent_stocks[x].stock.lower(), recent_stocks[x].ticker, "{:,.2f}".format(price), int((price-1200)/12)])
-	return card_values
+			price = float(price.second_check)
+
+		query.append([stock.lower(), ticker, price, int((price-1200)/12)])
+
+	query.sort(key = lambda x: x[2], reverse = True)
+
+	for entry in query:
+		entry[2] = "{:,.2f}".format(entry[2])
+	return query
+
+	# # recent_stocks = Stock.query.order_by(Stock.id.desc()).limit(len(ticker_investment)).all()
+	# # recent_stocks.sort(key=lambda x: float(x.first_check), reverse=True)
+	# query.sort(key=lambda x: float(x.first_check), reverse=True)
+	# # card_values = []
+	# for x in range(len(query)):
+	# 	# print(recent_stocks[x].ticker)
+	# 	if not check_number:
+	# 		price = float(query[x].first_check)
+	# 	else:
+	# 		price = float(query[x].second_check)
+	# 	# card_values.append([x.stock.lower(), x.ticker, "{:,.2f}".format(price), int((price-1200)/12)])
+	# 	query[x] = [query[x].stock.lower(), query[x].ticker, "{:,.2f}".format(price), int((price-1200)/12)]
+	# return query
 
 # @app.route("/")
 # def home():
@@ -59,7 +77,7 @@ def top_stocks(number):
 
 @app.route("/")
 def home():
-	return render_template("overview.html", investment_list=top_stocks(len(ticker_investment)))
+	return render_template("overview.html", investment_list=top_stocks())
 
 @app.route("/<stock_ticker>")
 def stock(stock_ticker):

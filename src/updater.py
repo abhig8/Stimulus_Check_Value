@@ -11,6 +11,7 @@ import bs4
 import requests
 from bs4 import BeautifulSoup
 import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 # import matplotlib.pyplot as plt
@@ -56,14 +57,14 @@ c = conn.cursor()
 # 		return stock_list
 
 
-def total_update():
-	print("starting...")
-	new_data = update_stocks()+update_cryptos()
-	for investment in new_data:
-		# c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
-		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
-	conn.commit()
-	print("done")
+# def total_update():
+# 	print("starting...")
+# 	new_data = update_stocks()+update_cryptos()
+# 	for investment in new_data:
+# 		# c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+# 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
+# 	conn.commit()
+# 	print("done")
 def update_stocks():
 	stock_list = []
 	for ticker, stock in ticker_stock.items():
@@ -77,7 +78,11 @@ def update_stocks():
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		stock_list.append([ticker, stock, price, date_time, first_check])
 		# clock.sleep(12)
-	return stock_list
+	# return stock_list
+	for investment in stock_list:
+		# c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
+	conn.commit()
 def update_cryptos():
 	crypto_list = []
 	for ticker, crypto in ticker_crypto.items():
@@ -92,14 +97,26 @@ def update_cryptos():
 		crypto_list.append([ticker, crypto, price, date_time, first_check])
 		# clock.sleep(12)
 		# crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " " + update_time + ":00", first_check])
-	return crypto_list
+	# return crypto_list
+	for investment in crypto_list:
+		# c.execute('insert into stock (ticker, stock, price, updated, first_check) values (?,?,?,?,?)', investment)
+		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
+	conn.commit()
 
 # total_update()
 
-update_time = "12:00"
 
-schedule.every().day.at(update_time).do(total_update)
+scheduler = BlockingScheduler()
+scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00', timezone = pst)
+scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
+scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
+scheduler.start()
 
-while 1:
-	schedule.run_pending()
+# update_time = "12:00"
+
+
+# schedule.every().day.at(update_time).do(total_update)
+
+# while 1:
+# 	schedule.run_pending()
 
