@@ -72,8 +72,7 @@ def update_stocks():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
-		date_time = "06-04-2021 01:00:00 PM PST"
+		date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		stock_list.append([ticker, stock, price, date_time, first_check])
 		# clock.sleep(12)
@@ -102,15 +101,15 @@ def update_cryptos():
 		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', investment)
 	conn.commit()
 
-update_cryptos()
-update_stocks()
+# update_cryptos()
+# update_stocks()
 
 
-# scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
-# scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
-# scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
-# scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
-# scheduler.start()
+scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
+scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
+scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
+scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
+scheduler.start()
 
 # update_time = "12:00"
 
