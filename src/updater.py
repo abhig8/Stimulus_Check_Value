@@ -73,8 +73,7 @@ def update_stocks():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
-		date_time = "06-04-2021 @ 01:00:00 PM"
+		date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		stock_list.append([ticker, stock, price, date_time, first_check])
 		# clock.sleep(12)
@@ -88,17 +87,16 @@ def update_cryptos():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD?p=' + ticker + '-USD')
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		# date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
-		date_time = "06-04-2021 @ 01:00:00 PM"
+		date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
 		first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 		crypto_list.append([ticker, crypto, price, date_time, first_check])
 		# clock.sleep(12)
 		# crypto_list.append([ticker, ticker_crypto.get(ticker), price, latest_date + " " + update_time + ":00", first_check])
 	return crypto_list
 
-update_time = "12:00"
-
 # total_update()
+
+update_time = "12:00"
 
 schedule.every().day.at(update_time).do(total_update)
 
