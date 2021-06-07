@@ -15,8 +15,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 
-# DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 
 
 # import matplotlib.pyplot as plt
@@ -120,11 +120,12 @@ def update_investment(ticker, investment_type):
 	date_time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
 	first_check =  "{0:.2f}".format(1200/ticker_price_april.get(ticker)*price)
 	c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', [ticker, investment, price, date_time, first_check])
+	conn.commit()
 
 # update_cryptos()
 # update_stocks()
 
-#update_investment("T", "stock")
+# update_investment("T", "stock")
 
 
 
