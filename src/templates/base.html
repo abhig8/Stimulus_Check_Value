@@ -2,57 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<title> {% block title %} {% endblock %}</title>
 		<link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
 		<link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="apple-touch-icon">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 		<link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-		<style>
-		h1 {text-align: center;}
-		h2 {text-align: center;}
-		h3 {text-align: center; padding-top: 5px; padding-bottom: 15px;}
-		h4 {text-align: center;}
-		h5 {text-align: center;}
-		h6 {text-align: center;}
-		p {text-align: center;}
-		div {text-align: center;}
-		a {
-		    text-decoration: none; 
-		    color: black; 
-		    outline: none;
-		}
-		.table-row {
-			cursor:pointer;
-		}
-		.column {
-		  float: left;
-		  width: 25%;
-		  padding: 10 10px;
-		}
-		.row {
-			margin: 0 -5px;
-			padding-bottom: 10px;
-		}
-		.card {
-		  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-		  padding: 10px;
-		  transition: 0.5s;
-		  text-align: center;
-		  border-radius: 15px;
-		  min-width: 246.5px;
-		}
-		.card:hover {
-		  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		}
-		@media screen and (max-width: 800px) {
-			.column {
-				width: 100%;
-				display: block;
-				margin-bottom: 20px;
-			}
-		}
-		</style>
-		<title style="border-top:50px;"> {% block title %} {% endblock %}</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css')}}"> 
 	</head>
+
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		  <div class="container-fluid">
@@ -69,22 +26,22 @@
 		            Stocks
 		          </a>
 		          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-					<li><a class= "dropdown-item" href=TSLA>TESLA</a></li>
-					<li><a class= "dropdown-item" href=GOOGL>GOOGLE</a></li>
-					<li><a class= "dropdown-item" href=AAPL>APPLE</a></li>
-					<li><a class= "dropdown-item" href=PTON>PELOTON</a></li>
-					<li><a class= "dropdown-item" href=FB>FACEBOOK</a></li>
-					<li><a class= "dropdown-item" href=AMZN>AMAZON</a></li>
-					<li><a class= "dropdown-item" href=NFLX>NETFLIX</a></li>
-					<li><a class= "dropdown-item" href=GME>GAMESTOP</a></li>
-					<li><a class= "dropdown-item" href=AMC>AMC THEATRES</a></li>
-					<li><a class= "dropdown-item" href=NOK>NOKIA</a></li>
-					<li><a class= "dropdown-item" href=KOSS>KOSS CORPORATION</a></li>
-					<li><a class= "dropdown-item" href=BB>BLACKBERRY</a></li>
-					<li><a class= "dropdown-item" href=T>AT&T</a></li>
-					<li><a class= "dropdown-item" href=MSFT>MICROSOFT</a></li>
-					<li><a class= "dropdown-item" href=TGT>TARGET</a></li>
-					<li><a class= "dropdown-item" href=CVS>CVS HEALTH</a></li>
+								<li><a class= "dropdown-item" href=TSLA>TESLA</a></li>
+								<li><a class= "dropdown-item" href=GOOGL>GOOGLE</a></li>
+								<li><a class= "dropdown-item" href=AAPL>APPLE</a></li>
+								<li><a class= "dropdown-item" href=PTON>PELOTON</a></li>
+								<li><a class= "dropdown-item" href=FB>FACEBOOK</a></li>
+								<li><a class= "dropdown-item" href=AMZN>AMAZON</a></li>
+								<li><a class= "dropdown-item" href=NFLX>NETFLIX</a></li>
+								<li><a class= "dropdown-item" href=GME>GAMESTOP</a></li>
+								<li><a class= "dropdown-item" href=AMC>AMC THEATRES</a></li>
+								<li><a class= "dropdown-item" href=NOK>NOKIA</a></li>
+								<li><a class= "dropdown-item" href=KOSS>KOSS CORPORATION</a></li>
+								<li><a class= "dropdown-item" href=BB>BLACKBERRY</a></li>
+								<li><a class= "dropdown-item" href=T>AT&T</a></li>
+								<li><a class= "dropdown-item" href=MSFT>MICROSOFT</a></li>
+								<li><a class= "dropdown-item" href=TGT>TARGET</a></li>
+								<li><a class= "dropdown-item" href=CVS>CVS HEALTH</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -92,16 +49,16 @@
 		            Cryptos
 		          </a>
 		          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-					<li><a class= "dropdown-item" href=BTC>BITCOIN</a></li>
-					<li><a class= "dropdown-item" href=ETH>ETHEREUM</a></li>
-					<li><a class= "dropdown-item" href=DOGE>DOGECOIN</a></li>
-					<li><a class= "dropdown-item" href=XRP>RIPPLE</a></li>
-					<li><a class= "dropdown-item" href=LTC>LITECOIN</a></li>
-					<li><a class= "dropdown-item" href=USDT>TETHER</a></li>
-					<li><a class= "dropdown-item" href=LINK>CHAINLINK</a></li>
-					<li><a class= "dropdown-item" href=ETC>ETHEREUM CLASSIC</a></li>
-					<li><a class= "dropdown-item" href=BCH>BITCOIN CASH</a></li>
-					<li><a class= "dropdown-item" href=ALGO>ALGORAND</a></li>
+								<li><a class= "dropdown-item" href=BTC>BITCOIN</a></li>
+								<li><a class= "dropdown-item" href=ETH>ETHEREUM</a></li>
+								<li><a class= "dropdown-item" href=DOGE>DOGECOIN</a></li>
+								<li><a class= "dropdown-item" href=XRP>RIPPLE</a></li>
+								<li><a class= "dropdown-item" href=LTC>LITECOIN</a></li>
+								<li><a class= "dropdown-item" href=USDT>TETHER</a></li>
+								<li><a class= "dropdown-item" href=LINK>CHAINLINK</a></li>
+								<li><a class= "dropdown-item" href=ETC>ETHEREUM CLASSIC</a></li>
+								<li><a class= "dropdown-item" href=BCH>BITCOIN CASH</a></li>
+								<li><a class= "dropdown-item" href=ALGO>ALGORAND</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -109,8 +66,10 @@
 		            More Check Dates Coming Soon
 		          </a>
 		          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+		          	<!-- add POST method to update variable in init.py (flask instance) -->
 		            <li><a class= "dropdown-item" href="/">April 13, 2020</a></li>
 		            <li><a class="dropdown-item" href="/">December 28, 2020</a></li>
+		            <li><a class="dropdown-item" href="/">Third date</a></li>
 		          </ul>
 		        </li>
 		      </ul>
@@ -121,15 +80,22 @@
 		    </div>
 		  </div>
 		</nav>
+
+		<header>
+			{% block header%}
+			{% endblock %}
+		</header>
+
 		{% block content %}
 		{% endblock %}
-		<footer style = "padding-top: 10px;">
+
+		<footer>
 		</footer>
+
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-		{% block scripts %}
-		{% endblock %}
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='./js/main.js')}}"></script>
 	</body>
 </html>

@@ -1,12 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ stock_name | title }}{% endblock %}
 
-{% block content %}
-<h1 style="padding-top: 25px; margin: 0;">
-	<!img
-        style="max-width:150px; max-height:70px;"
-            src="{{ url_for('static', filename='../static/assets/img/'+stock_name | lower+'-logo.png') }}" 
-            />
+{% block header%}
+<h1>
     <img
         style="max-width:150px; max-height:75px;"
             src= "{{ image_link }}"
@@ -16,13 +12,12 @@
         style="max-width:150px; max-height:75px;"
             src= "{{ image_link }}"
             />
-	<!img
-        style="max-width:150px; max-height:70px;"
-            src="{{ url_for('static', filename='../static/assets/img/'+stock_name | lower+'-logo.png') }}" 
-            />
 </h1>
+{% endblock %}
+
+{% block content %}
 <h3 style="padding-bottom: 10px; padding: 0;"> <font color="#696969">({{ stock_ticker }})</font> </h3>
-<h1> ${{ stock_price }} USD</h1>
+<h2> ${{ stock_price }} USD</h1>
 <h3 style="padding-bottom: 10px"> 
 	{% if percentage > 0 %} 
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-arrow-up" viewBox="0 0 10 20">
@@ -31,25 +26,17 @@
 	{% elif percentage == 0 %}
 		No Change
 	{% else %}
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 10 20">
 			<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-		</svg><span style="color: Red">{{ investment[3] | abs }}%</span>
+		</svg><span style="color: Red">{{ percentage | abs }}%</span>
 	{% endif %}
 </h3>
 <h6 style = "padding-bottom: 10px">As of {{ last_updated }}</h6>
-<p>Possible value of $1200 investment on April 15, 2020</p>
+<p>Possible gains on a $1200 investment made on April 15, 2020</p>
 <div id="b" style="position:absolute; top:400px">
 	<img
 	        style="max-width:500px; max-height:200px;"
 	            src="{{ url_for('static', filename='assets/img/favicon.png') }}" 
 	            />
 </div>
-{% endblock %}
-{% block scripts %}
-<script>
-	$(document).ready(function() {
-	    $("#b").animate({left: "+=700"}, 2500);
-	    $("#b").animate({left: "-=500"}, 1500);
-	});
-</script>
 {% endblock %}
