@@ -5,7 +5,7 @@ import bs4
 import requests
 from bs4 import BeautifulSoup
 import datetime
-from stock_info import ticker_stock, ticker_crypto, ticker_price_april, ticker_price_december, ticker_investment
+from stock_info import *
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
@@ -28,7 +28,7 @@ def update_stocks():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), get_first_check_val(ticker, price)])
+		c.execute('insert into stock (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), get_first_check_val(ticker, price), 0, 0])
 		clock.sleep(10)
 	conn.commit()
 
@@ -37,7 +37,7 @@ def update_cryptos():
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD?p=' + ticker + '-USD')
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', [ticker, crypto, price, get_time(), get_first_check_val(ticker, price)])
+		c.execute('insert into stock (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, crypto, price, get_time(), get_first_check_val(ticker, price), 0, 0])
 		clock.sleep(10)
 	conn.commit()
 
@@ -51,7 +51,7 @@ def update_investment(ticker, investment_type):
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
 	investment = ticker_investment.get(ticker)
-	c.execute('insert into stock (ticker, stock, price, updated, first_check) values (%s,%s,%s,%s,%s)', [ticker, investment, price, get_time(), get_first_check_val(ticker, price)])
+	c.execute('insert into stock (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, investment, price, get_time(), get_first_check_val(ticker, price), 0, 0])
 	conn.commit()
 
 # update_cryptos()

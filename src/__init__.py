@@ -47,7 +47,7 @@ def top(investment):
 		price = Stock.query.order_by(Stock.id.desc()).filter_by(ticker=ticker).first()
 		if not check_number:
 			price = float(price.first_check)
-		else:
+		if check_number == 1:
 			price = float(price.second_check)
 
 		query.append([stock.lower(), ticker, price, int((price-1200)/12), ticker_stock_image_link.get(ticker)])
