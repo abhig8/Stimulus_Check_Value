@@ -20,6 +20,7 @@ db = SQLAlchemy(app)
 
 # if 0 --> April 15, 2020 --> check 1
 # if 1 --> check 2
+# if 2 --> check 3
 check_number = 0
 
 class Stock(db.Model):
@@ -29,6 +30,8 @@ class Stock(db.Model):
     price = db.Column(db.Float)
     updated = db.Column(db.String())
     first_check = db.Column(db.String())
+    second_check = db.Column(db.String())
+    third_check = db.Column(db.String())
 
     def __init__(self, ticker, stock, price, updated, first_check):
     	self.ticker = ticker
@@ -36,6 +39,8 @@ class Stock(db.Model):
     	self.price = price
     	self.updated = updated
     	self.first_check = first_check
+    	self.second_check = second_check
+    	self.third_check = third_check
 
 
 def format_time(date_time):
@@ -47,9 +52,10 @@ def top(investment):
 		price = Stock.query.order_by(Stock.id.desc()).filter_by(ticker=ticker).first()
 		if not check_number:
 			price = float(price.first_check)
-		if check_number == 1:
+		elif check_number == 1:
 			price = float(price.second_check)
-
+		elif check_number == 2:
+			price = float(price.third_check)
 		query.append([stock.lower(), ticker, price, int((price-1200)/12), ticker_stock_image_link.get(ticker)])
 
 	query.sort(key = lambda x: x[2], reverse = True)
