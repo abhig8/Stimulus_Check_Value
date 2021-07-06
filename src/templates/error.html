@@ -2,9 +2,22 @@
 
 {% block title %}Error{% endblock %}
 
-{% block header%}<h1 style="padding: 25px";>"{{ error_stock }}" Not Found!</h1>{% endblock %}
+{% block header%}
+  <div class="flex-container">
+    <div class="item">
+      <img height="80px" src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+    </div>
+    <div class="item">
+      <h1> Stimmy Checkz </h1>
+    </div>
+  </div>
+{% endblock %}
 
 {% block content %}
-<h3 style="margin-bottom: 0px";>*Choose Investments from Dropdowns and search for Tickers in Search Bar*</h3>
-<h3 style="margin-bottom: 0px";>*Make sure search is for stock ticker, NOT stock name*</h3>
+<h2>"{{ error_stock }}" Not Found!</h1>
+<h4>Tip: Click On Table Rows or Search for Tickers</h3>
+
+<div id="kitty">
+	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+</div>
 {% endblock %}

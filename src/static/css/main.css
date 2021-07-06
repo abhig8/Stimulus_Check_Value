@@ -1,22 +1,16 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
-h2, h4, h5, h6, div, p { 
+h1, h2, h3, h4, h5, h6, div, p { 
   text-align: center; 
 }
 
-h1 { 
-  padding-top: 20px; 
-  text-align: center; 
-  margin-bottom: 0px;
+h6 {
+  margin: 15px 0px;
 }
-
-h3 { 
-  text-align: center; 
-  padding-top: 5px; 
-  padding-bottom: 15px; }
 
 a { 
   text-decoration: none; 
@@ -24,11 +18,43 @@ a {
   outline: none; 
 }
 
-.table-row {
-	cursor:pointer;
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 90px;
+  align-items: center;
+  column-gap: 10px;
+  margin: 10px 0px;
+}
+
+#stocks {
+  vertical-align: middle; 
+  text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+  width: 99%;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 99%;
+  border-radius: 100px;
+  border-width: thin;
+  padding-left: 10px;
+}
+
+#kitty {
+  position: absolute; 
+  margin-top: 20px;
+}
+
+#kitty img {
+  max-width:300px; 
+  max-height:150px; 
+  float: left;
 }
 
 footer {
-	padding-top: 10px;
+  padding-top: 10px;
 }
-

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $('#stocks').DataTable({
+  	"dom":"ftip",
     "paging": false,
     'columnDefs': [
     {'width': '270', 'targets': 0},
@@ -7,11 +8,20 @@ $(document).ready(function() {
     {'width': '100', 'targets': 2}
     ],
     "order": [[ 1, "desc" ]],
+    language: {
+	    searchPlaceholder: "Search",
+	    search: "",
+  	}
   });
 });
 
 
-$(document).ready(function() {
-    $("#b").animate({left: "+=700"}, 2500);
-    $("#b").animate({left: "-=500"}, 1500);
-});
+function beeLeft() {
+  $("#kitty").animate({left: "-0%"}, 4000, "swing", beeRight);
+}
+function beeRight() {
+  $("#kitty").animate({left: "100%"}, 3500, "swing", beeLeft);
+}
+
+
+beeRight();

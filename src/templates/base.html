@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title> {% block title %} {% endblock %}</title>
 		<link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
 		<link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="apple-touch-icon">
@@ -21,45 +22,12 @@
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
 		          <a class="nav-link active" aria-current="page" href="/">Home</a>
-		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Stocks
-		          </a>
-		          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-								<li><a class= "dropdown-item" href=TSLA>TESLA</a></li>
-								<li><a class= "dropdown-item" href=GOOGL>GOOGLE</a></li>
-								<li><a class= "dropdown-item" href=AAPL>APPLE</a></li>
-								<li><a class= "dropdown-item" href=PTON>PELOTON</a></li>
-								<li><a class= "dropdown-item" href=FB>FACEBOOK</a></li>
-								<li><a class= "dropdown-item" href=AMZN>AMAZON</a></li>
-								<li><a class= "dropdown-item" href=NFLX>NETFLIX</a></li>
-								<li><a class= "dropdown-item" href=GME>GAMESTOP</a></li>
-								<li><a class= "dropdown-item" href=AMC>AMC THEATRES</a></li>
-								<li><a class= "dropdown-item" href=NOK>NOKIA</a></li>
-								<li><a class= "dropdown-item" href=KOSS>KOSS CORPORATION</a></li>
-								<li><a class= "dropdown-item" href=BB>BLACKBERRY</a></li>
-								<li><a class= "dropdown-item" href=T>AT&T</a></li>
-								<li><a class= "dropdown-item" href=MSFT>MICROSOFT</a></li>
-								<li><a class= "dropdown-item" href=TGT>TARGET</a></li>
-								<li><a class= "dropdown-item" href=CVS>CVS HEALTH</a></li>
-		          </ul>
 		        </li>
-		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Cryptos
-		          </a>
-		          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-								<li><a class= "dropdown-item" href=BTC>BITCOIN</a></li>
-								<li><a class= "dropdown-item" href=ETH>ETHEREUM</a></li>
-								<li><a class= "dropdown-item" href=DOGE>DOGECOIN</a></li>
-								<li><a class= "dropdown-item" href=XRP>RIPPLE</a></li>
-								<li><a class= "dropdown-item" href=LTC>LITECOIN</a></li>
-								<li><a class= "dropdown-item" href=USDT>TETHER</a></li>
-								<li><a class= "dropdown-item" href=LINK>CHAINLINK</a></li>
-								<li><a class= "dropdown-item" href=ETC>ETHEREUM CLASSIC</a></li>
-								<li><a class= "dropdown-item" href=BCH>BITCOIN CASH</a></li>
-								<li><a class= "dropdown-item" href=ALGO>ALGORAND</a></li>
-		          </ul>
+		        <li class="nav-item">
+		        	<a class="nav-link active" aria-current="page" href="/stocks">Stocks</a>
+		        </li>
+		        <li class="nav-item">
+		        	<a class="nav-link active" aria-current="page" href="/cryptos">Cryptos</a>
 		        </li>
 		        <li class="nav-item dropdown">
 		          <a class="nav-link disabled" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

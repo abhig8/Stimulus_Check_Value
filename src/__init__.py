@@ -2,14 +2,14 @@ from flask import Flask, render_template, session, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, asc, Float
 from sqlalchemy.orm.attributes import InstrumentedAttribute
-from .stock_info import ticker_investment, ticker_stock_image_link
+from .stock_info import *
 import os
 
 app = Flask(__name__, template_folder = "templates", static_folder = "static")
 
 
-DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
-#DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
@@ -39,11 +39,11 @@ class Stock(db.Model):
 
 
 def format_time(date_time):
-	return date_time[:10] + " @" + date_time[10:] + " " + "PST"
+	return date_time[:10] + " at" + date_time[10:] + " " + "PST"
 
-def top_stocks():
+def top(investment):
 	query = []
-	for ticker, stock in ticker_investment.items():
+	for ticker, stock in investment.items():
 		price = Stock.query.order_by(Stock.id.desc()).filter_by(ticker=ticker).first()
 		if not check_number:
 			price = float(price.first_check)
@@ -61,7 +61,16 @@ def top_stocks():
 
 @app.route("/")
 def home():
-	return render_template("overview.html", investment_list=top_stocks())
+	return render_template("overview.html", investment_list=top(ticker_investment))
+
+@app.route("/stocks")
+def stocks():
+	return render_template("overview.html", investment_list=top(ticker_stock))
+
+
+@app.route("/cryptos")
+def cryptos():
+	return render_template("overview.html", investment_list=top(ticker_crypto))
 
 @app.route("/<stock_ticker>")
 def stock(stock_ticker):

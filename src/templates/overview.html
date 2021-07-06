@@ -3,26 +3,22 @@
 {% block title %}Stimmy Checkz {% endblock %}
 
 {% block header%}
-  <h1>
-    <img 
-      height="100px" 
-              src="{{ url_for('static', filename='assets/img/favicon.png') }}"
-              />
-    Stimmy Checkz
-    <img 
-      height="100px" 
-              src="{{ url_for('static', filename='assets/img/favicon.png') }}"
-              />
-  </h1>
+  <div class="flex-container">
+    <div class="item">
+      <img height="80px" src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+    </div>
+    <div class="item">
+      <h1> Stimmy Checkz </h1>
+    </div>
+  </div>
 {% endblock %}
 
 {% block content %}
 <div class="overview-page">
-  <br>
-  <h4 style="margin-bottom: 10px";>How rich could you have been if you invested your first stimmy check?</h4>
+  <h4>How rich could you have been if you invested your first stimmy check?</h4>
   <h6>Possible gains on a $1200 investment made on April 15, 2020</h6>
-  <div class="container" style="width: 50%">
-    <table id="stocks" style="vertical-align: middle; width:100%; text-align: left;" class="table table-hover">
+  <div class="container">
+    <table id="stocks" class="table table-hover" width="100%">
       <thead>
         <tr>
             <th>Investment</th>
@@ -33,17 +29,17 @@
       <tbody>
         {% for investment in investment_list%}
           <tr onclick="window.location='{{ investment[1] }}';">
-              <td style="padding-left:10px;">
-                <!img
+              <td>
+                <!-- img
                   style="max-width:100px; max-height:35px; cursor: pointer;"
                   src="{{ url_for('static', filename='../static/assets/img/'+investment[0]+'-logo.png') }}" 
-                    />
+                    /-->
                 <img 
-                  style = "max-width:100px; max-height:45px; cursor: pointer;"
+                  style = "max-width:100px; max-height:45px;"
                           src="{{ investment[4] }}"
                           />
                  <font style="cursor: pointer;"> {{ investment[0] | upper }}</font>
-                 <font style="cursor: pointer;" size="-1" color="#808A9D">{{investment[1]}}</font>
+                 <font style="cursor: pointer;" size="-1" color="#696969">{{investment[1]}}</font>
               </td>
               <td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
               <td data-order= "{{investment[2]}}">
