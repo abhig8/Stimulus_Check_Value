@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block header%}
+<h1>Admin</h1>
+{% endblock %}
+
+{% block content %}
+<h3>Protected Content</h3>
+<form id="admin" method='POST'>
+	Investment Type:
+	<input type="radio" id="stock" name="investment_type" value="Stock">
+  	<label for="stock">Stock</label>
+  	<input type="radio" id="crypto" name="investment_type" value="Crypto">
+  	<label for="crytpo">Crypto</label> <br>
+  	<label for="ticker">Ticker:</label>
+	<input type='text' id="ticker" name='ticker'> <br>
+	<label for="name">Investment Name:</label>
+	<input type='text' id="name" name='name'> <br>
+	<input type='submit' name='submit'>
+</form>
+{% endblock %}

@@ -9,13 +9,17 @@ h1, h2, h3, h4, h5, h6, div, p {
 }
 
 h6 {
-  margin: 15px 0px;
+  margin: 15px 5px;
 }
 
 a { 
   text-decoration: none; 
   color: black; 
   outline: none; 
+}
+
+p {
+  width: 96%;
 }
 
 .flex-container {
@@ -53,6 +57,22 @@ div.dataTables_wrapper div.dataTables_filter input {
   max-width:300px; 
   max-height:150px; 
   float: left;
+}
+
+input {
+  margin-bottom: 5px;
+}
+
+#admin {
+  text-align: center;
+}
+
+input#stock {
+    margin-left: 5px;
+}
+
+input#crypto {
+    margin-left: 5px;
 }
 
 footer {
