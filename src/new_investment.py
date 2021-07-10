@@ -44,5 +44,3 @@ records = c.fetchall()
 
 logo_link = ""
 website_link = ""
-
-# push to db
