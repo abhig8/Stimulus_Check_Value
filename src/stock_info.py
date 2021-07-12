@@ -63,7 +63,7 @@ ticker_stock_image_link = {'TSLA': 'https://eodhistoricaldata.com/img/logos/US/T
 # print(ticker_stock_image_link2)
 
 
-
+print(ticker_stock_image_link["BTC"])
 
 # adding new investments to nav bar dropdown in base.html:
 # for ticker, stock in ticker_stock.items():
@@ -73,9 +73,9 @@ ticker_stock_image_link = {'TSLA': 'https://eodhistoricaldata.com/img/logos/US/T
 
 
 # print(len(ticker_stock))
-for ticker, stock in ticker_stock.items():
-	add_investment("Stock", ticker, stock, ticker_stock_image_link[ticker])
+# for ticker, stock in ticker_stock.items():
+# 	add_investment("Stock", ticker, stock, ticker_stock_image_link[ticker])
 
-for ticker, crypto in ticker_crypto.items():
-	add_investment("Crypto", ticker, crypto, ticker_stock_image_link[ticker])
+# for ticker, crypto in ticker_crypto.items():
+# 	add_investment("Crypto", ticker, crypto, ticker_stock_image_link[ticker])
 

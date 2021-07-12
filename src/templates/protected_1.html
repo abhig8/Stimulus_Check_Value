@@ -10,14 +10,14 @@
 <h3>Protected Content</h3>
 <form id="admin" method='POST'>
 	Investment Type:
-	<input type="radio" id="stock" name="investment_type" value="Stock">
+	<input type="radio" id="stock" name="investment_type" value="Stock" required>
   	<label for="stock">Stock</label>
   	<input type="radio" id="crypto" name="investment_type" value="Crypto">
   	<label for="crytpo">Crypto</label> <br>
   	<label for="ticker">Ticker:</label>
-	<input type='text' id="ticker" name='ticker'> <br>
+	<input type='text' id="ticker" name='ticker' required> <br>
 	<label for="name">Investment Name:</label>
-	<input type='text' id="name" name='name'> <br>
+	<input type='text' id="name" name='name' required> <br>
 	<!--
 	<p>Which one of these images looks right?</p>
 	<input type="radio" id="image_1" name="investment_type" value="Image_1">
@@ -25,9 +25,11 @@
   	<input type="radio" id="image_2" name="investment_type" value="Image_2">
   	<label for="image_2">Image 2</label> <br>
   	-->
+  	<!--
 	<label for="image_link">Image Link:</label>
 	<input type='text' id="image_link" name='image_link'><br>
-	<input type='submit' name='submit'>
+	-->
+	<input type='submit' name='submit' value="Next">
 </form>
 <br>
 <form id="logout" method='POST'>

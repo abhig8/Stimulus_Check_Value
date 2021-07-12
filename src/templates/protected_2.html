@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block header%}
+<h1>Admin</h1>
+{% endblock %}
+
+{% block content %}
+<h3>Protected Content</h3>
+<form id="admin" method='POST'>
+	Investment Type:
+	{% if investment_type == "Stock" %}
+	<input type="radio" id="stock" name="investment_type" value="Stock" checked="checked" required>
+  	<label for="stock">Stock</label>
+  	<input type="radio" id="crypto" name="investment_type" value="Crypto">
+  	<label for="crytpo">Crypto</label> <br>
+  	{% elif investment_type == "Crypto" %}
+  	<input type="radio" id="stock" name="investment_type" value="Stock" required>
+  	<label for="stock">Stock</label>
+  	<input type="radio" id="crypto" name="investment_type" value="Crypto" checked="checked">
+  	<label for="crytpo">Crypto</label> <br>
+  	{% endif %}
+
+  	<label for="ticker">Ticker:</label>
+	<input type='text' id="ticker" name='ticker' value="{{ticker}}" required> <br>
+
+	<label for="name">Investment Name:</label>
+	<input type='text' id="name" name='name' value="{{stock}}" required> <br>
+	
+	<p>Which one of these images looks right?</p>
+	<input type="radio" id="image_1" name="image_link" value="{{ links[0] }}" required>
+  	<label for="image_1">
+  		<img height="80px" src='{{ links[0] }}'/>
+  	</label>
+  	<input type="radio" id="image_2" name="image_link" value='{{ links[1] }}'>
+  	<label for="image_2">
+  		<img height="80px" src="{{ links[1] }}" alt="Not found"/>
+  	</label> <br>
+  	<input type="radio" id="image_3" name="image_link" value="{{ links[2] }}">
+  	<label for="image_3">
+  		<img height="80px" src="{{ links[2] }}" alt="Not found"/>
+  	</label>
+  	<input type="radio" id="image_custom" name="image_link" value="Image_Custom">
+  	<input type='text' id="image_link" name='custom_image_link' value="Custom Image Link" onclick="checkRadio()"> <br>
+  
+  	<!-- 
+	<label for="image_link">Image Link:</label>
+	<input type='text' id="image_link" name='image_link'><br>
+	-->
+
+	<input type='submit' name='submit'>
+</form>
+<br>
+<form id="logout" method='POST'>
+	<input type="submit" id="logout" name="logout" value="Logout">
+</form>
+	
+{% endblock %}

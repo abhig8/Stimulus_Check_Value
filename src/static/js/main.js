@@ -25,3 +25,7 @@ function beeRight() {
 
 
 beeRight();
+
+function checkRadio(){
+  document.getElementById('image_custom').checked = "checked";
+}

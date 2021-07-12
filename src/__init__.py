@@ -147,6 +147,13 @@ def get_stocks():
         query.append([x.stock.lower(), x.ticker, price, int((price-1200)/12), x.image_link])
     return query
 
+
+def get_image_links(ticker, stock):
+    link_1 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
+    link_2 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
+    link_3 = "https://cryptologos.cc/logos/" + stock.lower().replace(" ","-") + "-" + ticker.lower() + "-logo.png"
+    return [link_1, link_2, link_3]
+
 @app.route("/")
 def home():
     return render_template("overview.html", investment_list=top("Both"))
@@ -206,20 +213,34 @@ def admin():
                 user = User()
                 user.id = username
                 flask_login.login_user(user)
-                return redirect(url_for('protect'))
+                return redirect(url_for('protect_1'))
         else:
             return render_template('admin.html')
     return render_template('admin.html')
 
-@app.route('/protect', methods=['GET', 'POST'])
+@app.route('/protect_1', methods=['GET', 'POST'])
 @flask_login.login_required
-def protect():
+def protect_1():
     if request.method == 'POST':
         if 'logout' in request.form:
             return redirect(url_for('logout'))
         else:
-            return render_template(add_investment(request.form.get('investment_type'), request.form.get('ticker'), request.form.get('name'), request.form.get('image_link')))
-    return render_template('protected.html')
+            return redirect(url_for("protect_2", investment_type=request.form.get('investment_type'), ticker=request.form.get('ticker'), stock=request.form.get('name')))
+    return render_template('protected_1.html')
+
+@app.route('/protect_2/<investment_type>/<ticker>/<stock>', methods=['GET', 'POST'])
+@flask_login.login_required
+def protect_2(investment_type, ticker, stock):
+    if request.method == 'POST':
+        if 'logout' in request.form:
+            return redirect(url_for('logout'))
+        else:
+            if request.form.get('image_link') == "Image_Custom":
+                image_link = request.form.get('custom_image_link')
+            else:
+                image_link = request.form.get('image_link')            
+            return redirect(url_for(add_investment(request.form.get('investment_type'), request.form.get('ticker').upper(), request.form.get('name').upper(), image_link)))
+    return render_template('protected_2.html', investment_type=investment_type, ticker=ticker, stock=stock, links=get_image_links(ticker, stock))
 
 @app.route('/logout')
 def logout():

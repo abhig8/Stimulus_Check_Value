@@ -5,7 +5,9 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 
-DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+DATABASE_URL = os.environ['DATABASE_URL']
+
 
 headers = { 
     'User-Agent'      : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', 
@@ -36,7 +38,7 @@ def add_investment(investment_type, ticker, name, image_link):
 	except Exception as e:
 		print(e)
 		# need to display error that program was unable to scrape the specifi ivnestment & ticker or picture
-	return "protected.html"
+	return "protect_1"
 	# figure out way to add success image pop-up investment is added
 	# figure out way to scrape Stock name once the ticker is entered and allow the user to change it if they wish
 	# figure out way to quickly scrape images from all possible links and allow the user to select options or input custom link
