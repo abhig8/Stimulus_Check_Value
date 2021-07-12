@@ -1,3 +1,5 @@
+from new_investment import add_investment
+
 
 # when adding new investment need to add to all uncommented variables on this page and run and update_investment line in updater.py
 
@@ -68,3 +70,12 @@ ticker_stock_image_link = {'TSLA': 'https://eodhistoricaldata.com/img/logos/US/T
 # 	print("<li><a class= \"dropdown-item\" href=" + ticker + '>' + stock + "</a></li>")
 # for ticker, crypto in ticker_crypto.items():
 # 	print("<li><a class= \"dropdown-item\" href=" + ticker + '>' + crypto + "</a></li>")
+
+
+# print(len(ticker_stock))
+for ticker, stock in ticker_stock.items():
+	add_investment("Stock", ticker, stock, ticker_stock_image_link[ticker])
+
+for ticker, crypto in ticker_crypto.items():
+	add_investment("Crypto", ticker, crypto, ticker_stock_image_link[ticker])
+

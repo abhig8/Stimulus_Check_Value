@@ -5,13 +5,12 @@ import bs4
 import requests
 from bs4 import BeautifulSoup
 import datetime
-from stock_info import *
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 
-# DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+DATABASE_URL = os.environ['DATABASE_URL']
+# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 c = conn.cursor()
@@ -19,25 +18,42 @@ c = conn.cursor()
 
 def get_time():
 	return datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+	# return('07-12-2021 01:00:00 PM')
 
-def get_first_check_val(ticker, curr_price):
-	return "{0:.2f}".format(1200/ticker_price_april.get(ticker)*curr_price)
+def get_all_curr_values(curr_price, first_check_val, second_check_val, third_check_val):
+	first_val = "{0:.2f}".format(1200/float(first_check_val)*curr_price)
+	second_val = "{0:.2f}".format(1200/float(second_check_val)*curr_price)
+	third_val = "{0:.2f}".format(1200/float(third_check_val)*curr_price)
+	return [first_val, second_val, third_val]
+
 
 def update_stocks():
-	for ticker, stock in ticker_stock.items():
+	c.execute('select * from stocks')
+	for x in c.fetchall():
+		ticker = x[0]
+		stock = x[1]
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), get_first_check_val(ticker, price), 0, 0])
+		c.execute('select * from stocks where ticker=' + f"'{ticker}'")
+		row=c.fetchall()[0]
+		vals = get_all_curr_values(price, row[3], row[4], row[5])
+		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), vals[0], vals[1], vals[2]])
 		clock.sleep(10)
 	conn.commit()
 
 def update_cryptos():
-	for ticker, crypto in ticker_crypto.items():
+	c.execute('select * from cryptos')
+	for x in c.fetchall():
+		ticker = x[0]
+		stock = x[1]
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD?p=' + ticker + '-USD')
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, crypto, price, get_time(), get_first_check_val(ticker, price), 0, 0])
+		c.execute('select * from cryptos where ticker=' + f"'{ticker}'")
+		row=c.fetchall()[0]
+		vals = get_all_curr_values(price, row[3], row[4], row[5])
+		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), vals[0], vals[1], vals[2]])
 		clock.sleep(10)
 	conn.commit()
 
@@ -45,7 +61,6 @@ def update_cryptos():
 # update_cryptos()
 # update_stocks()
 
-# update_investment("T", "stock")
 
 scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
 scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')

@@ -19,17 +19,22 @@ headers = {
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 c = conn.cursor()
 
+def get_time():
+	return datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+	# return('07-12-2021 01:00:00 PM')
+
 def add_investment(investment_type, ticker, name, image_link):
 	try: 
 		if investment_type == "Stock":
 			first_date_value, second_date_value, third_date_value = add_stock(ticker, name)
+			c.execute('insert into stocks (ticker, stock, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s) on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, first_check_val=EXCLUDED.first_check_val, second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val', [ticker, name, image_link , first_date_value, second_date_value, third_date_value])
 		elif investment_type == "Crypto":
 			first_date_value, second_date_value, third_date_value = add_crypto(ticker, name)
-		c.execute('insert into stocks (ticker, stock, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s) on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, first_check_val=EXCLUDED.first_check_val, second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val', [ticker, name, image_link , first_date_value, second_date_value, third_date_value])
+			c.execute('insert into cryptos (ticker, stock, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s) on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, first_check_val=EXCLUDED.first_check_val, second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val', [ticker, name, image_link , first_date_value, second_date_value, third_date_value])
+		vals = update_investment(ticker, name, investment_type, first_date_value, second_date_value, third_date_value)
 		conn.commit()
-		update_investment(ticker, name, investment_type)
-	except:
-		pass
+	except Exception as e:
+		print(e)
 		# need to display error that program was unable to scrape the specifi ivnestment & ticker or picture
 	return "protected.html"
 	# figure out way to add success image pop-up investment is added
@@ -77,30 +82,25 @@ def add_crypto(ticker, name):
 		return row_1[3].find("span").text.replace(',','')
 	return get_lowest_price(ticker, 1), get_lowest_price(ticker, 2), get_lowest_price(ticker, 3)
 
-def get_all_curr_values(ticker, tablename, curr_price):
-	c.execute('select * from ' + tablename + ' where ticker=' + 'ticker')
-	row = c.fetchall()[0]
-	first_val = "{0:.2f}".format(1200/float(row[3])*curr_price)
-	second_val = "{0:.2f}".format(1200/float(row[4])*curr_price)
-	third_val = "{0:.2f}".format(1200/float(row[5])*curr_price)
+def get_all_curr_values(curr_price, first_check_val, second_check_val, third_check_val):
+	first_val = "{0:.2f}".format(1200/float(first_check_val)*curr_price)
+	second_val = "{0:.2f}".format(1200/float(second_check_val)*curr_price)
+	third_val = "{0:.2f}".format(1200/float(third_check_val)*curr_price)
 	return [first_val, second_val, third_val]
 
-def update_investment(ticker, name, investment_type):
+def update_investment(ticker, name, investment_type, first_check_val, second_check_val, third_check_val):
 	if investment_type == "Stock":
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		tablename = 'stocks'
 	elif investment_type == "Crypto":
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD?p=' + ticker + '-USD')
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
-		tablename = 'cryptos'
-	# time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
-	time = "07-09-2021 01:00:00 PM"
-	values = get_all_curr_values(ticker, tablename, float(price))
-	c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, name, price, time, values[0], values[1], values[2]])
-	conn.commit()
+	time = datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
+	values = get_all_curr_values(float(price), first_check_val, second_check_val, third_check_val)
+	c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, name, price, get_time(), values[0], values[1], values[2]])
+	return values
 
 # add_crypto("BTC", "Bitcoin", "")
 # print(first_date_value, second_date_value, third_date_value, ticker, name)
