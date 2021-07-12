@@ -63,7 +63,7 @@ input {
   margin-bottom: 5px;
 }
 
-#admin {
+form#admin, form#logout{
   text-align: center;
 }
 
@@ -74,6 +74,7 @@ input#stock {
 input#crypto {
     margin-left: 5px;
 }
+
 
 footer {
   padding-top: 10px;

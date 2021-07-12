@@ -14,8 +14,8 @@ login_manager = LoginManager()
 app = Flask(__name__, template_folder = "templates", static_folder = "static")
 app.secret_key = 'key'
 
-# DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
+# DATABASE_URL = os.environ['DATABASE_URL']
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
@@ -103,6 +103,8 @@ def request_loader(request):
     user.is_authenticated = request.form['password'] == users[username]['password']
     return user
 
+
+
 def format_time(date_time):
     return date_time[:10] + " at" + date_time[10:] + " " + "PST"
 
@@ -162,31 +164,33 @@ def search():
 def error(stock_ticker):
     return render_template("error.html", error_stock=stock_ticker)
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        if username in users.keys():
+            if request.form.get('password') == users[username]['password']:
+                user = User()
+                user.id = username
+                flask_login.login_user(user)
+                return redirect(url_for('protect'))
+        else:
+            return render_template('admin.html')
+    return render_template('admin.html')
 
-# @app.route('/admin', methods=['GET', 'POST'])
-# def admin():
-#     if request.method == 'POST':
-#         username = request.form.get('username')
-#         if username in users.keys():
-#             if request.form.get('password') == users[username]['password']:
-#                 user = User()
-#                 user.id = username
-#                 flask_login.login_user(user)
-#                 return redirect(url_for('protect'))
-#         else:
-#             return render_template('admin.html')
-#     return render_template('admin.html')
+@app.route('/protect', methods=['GET', 'POST'])
+@flask_login.login_required
+def protect():
+    if request.method == 'POST':
+        if 'logout' in request.form:
+            return redirect(url_for('logout'))
+        else:
+            return render_template(add_investment(request.form.get('investment_type'), request.form.get('ticker'), request.form.get('name'), request.form.get('image_link')))
+    return render_template('protected.html')
 
-# @app.route('/protect', methods=['GET', 'POST'])
-# @flask_login.login_required
-# def protect():
-#     if request.method == 'POST':
-#         return render_template(add_investment(request.form.get('investment_type'), request.form.get('ticker'), request.form.get('name')))
-#     return render_template('protected.html')
-
-# @app.route('/logout')
-# def logout():
-#     flask_login.logout_user()
-#     return 'Logged out'
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for('home'))
 
 
