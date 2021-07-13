@@ -22,15 +22,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager.init_app(app)
 
-# if 0 --> April 15, 2020 --> check 1
-# if 1 --> check 2
-# if 2 --> check 3
-check_number = 0
+
+# if 1: check date 1: April 15, 2020
+# if 2: check date 2: December 29th, 2020
+# finding date check date 3: March 16th, 2021
+check_number = 1
 
 check_number_overview_line = {
-    0: "Possible gains on a $1200 investment made on April 15, 2020",
-    1: "Possible gains on a $600 investment made on December 29, 2020",
-    2: "Possible gains on a $1400 investment made on March 16, 2021"
+    1: "Possible gains on a $1200 investment made on April 15, 2020",
+    2: "Possible gains on a $600 investment made on December 29, 2020",
+    3: "Possible gains on a $1400 investment made on March 16, 2021"
 }
 
 users = {'abhig.123':{'password': 'myp@33w0.rd'}}
@@ -89,6 +90,7 @@ class Cryptos(db.Model):
 class User(UserMixin):
     pass
 
+
 @login_manager.user_loader
 def user_loader(username):
     if username not in users:
@@ -108,17 +110,15 @@ def request_loader(request):
     return user
 
 
-
 def format_time(date_time):
     return date_time[:10] + " at" + date_time[10:] + " " + "PST"
 
-
 def calculate_percentage(price):
-    if not check_number:
+    if check_number == 1:
         return int((price-1200)/12)
-    elif check_number == 1:
-        return int((price-600)/6)
     elif check_number == 2:
+        return int((price-600)/6)
+    elif check_number == 3:
         return int((price-1400)/14)
 
 def top(investment_type):
@@ -133,39 +133,34 @@ def top(investment_type):
         entry[2] = "{:,.2f}".format(entry[2])
     return query
 
+def get_latest_value(row):
+    if check_number == 1:
+        return float(row.first_check)
+    elif check_number == 2:
+        return float(row.second_check)
+    elif check_number == 3:
+        return float(row.third_check)
 
 def get_cryptos():
     query = []
     for x in Cryptos.query.all():
-        price = Investments.query.order_by(Investments.id.desc()).filter_by(ticker=x.ticker).first()
-        if not check_number:
-            price = float(price.first_check)
-        elif check_number == 1:
-            price = float(price.second_check)
-        elif check_number == 2:
-            price = float(price.third_check)
-        query.append([x.stock.lower(), x.ticker, price, calculate_percentage(price), x.image_link])
+        value = get_latest_value(Investments.query.order_by(Investments.id.desc()).filter_by(ticker=x.ticker).first())
+        query.append([x.stock.lower(), x.ticker, value, calculate_percentage(value), x.image_link])
     return query
 
 def get_stocks():
     query = []
     for x in Stocks.query.all():
-        price = Investments.query.order_by(Investments.id.desc()).filter_by(ticker=x.ticker).first()
-        if not check_number:
-            price = float(price.first_check)
-        elif check_number == 1:
-            price = float(price.second_check)
-        elif check_number == 2:
-            price = float(price.third_check)
-        query.append([x.stock.lower(), x.ticker, price, calculate_percentage(price), x.image_link])
+        value = get_latest_value(Investments.query.order_by(Investments.id.desc()).filter_by(ticker=x.ticker).first())
+        query.append([x.stock.lower(), x.ticker, value, calculate_percentage(value), x.image_link])
     return query
-
 
 def get_image_links(ticker, stock):
     link_1 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
     link_2 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
     link_3 = "https://cryptologos.cc/logos/" + stock.lower().replace(" ","-") + "-" + ticker.lower() + "-logo.png"
     return [link_1, link_2, link_3]
+
 
 @app.route("/")
 def home():
@@ -183,32 +178,24 @@ def cryptos():
 
 @app.route("/<stock_ticker>")
 def stock(stock_ticker):
+    row = None
     for investment in Stocks.query.all():
         if stock_ticker == investment.ticker or stock_ticker == investment.stock:
-            stock_data = Investments.query.filter_by(ticker=investment.ticker).order_by(Investments.id.desc()).first()
-            if not check_number:
-                price = float(stock_data.first_check)
-            if check_number == 1:
-                price = float(stock_data.second_check)
-            if check_number == 2:
-                price = float(stock_data.third_check)
-            return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_data.ticker, 
-            stock_price = "{:,.2f}".format(price), last_updated = format_time(stock_data.updated),
-            percentage = calculate_percentage(price), image_link = investment.image_link, overview_line = check_number_overview_line[check_number])
-    for investment in Cryptos.query.all():
-        if stock_ticker == investment.ticker or stock_ticker == investment.stock:
-            stock_data = Investments.query.filter_by(ticker=investment.ticker).order_by(Investments.id.desc()).first()
-            if not check_number:
-                price = float(stock_data.first_check)
-            if check_number == 1:
-                price = float(stock_data.second_check)
-            if check_number == 2:
-                price = float(stock_data.third_check)
-            return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_data.ticker, 
-            stock_price = "{:,.2f}".format(price), last_updated = format_time(stock_data.updated),
-            percentage = calculate_percentage(price), image_link = investment.image_link, overview_line = check_number_overview_line[check_number])
-    else:
-        return error(stock_ticker)
+            image_link = investment.image_link
+            row = Investments.query.filter_by(ticker=investment.ticker).order_by(Investments.id.desc()).first()
+            break
+    if not row: 
+        for investment in Cryptos.query.all():
+            if stock_ticker == investment.ticker or stock_ticker == investment.stock:
+                image_link = investment.image_link
+                row = Investments.query.filter_by(ticker=investment.ticker).order_by(Investments.id.desc()).first()
+                break
+    if row: 
+        value = get_latest_value(row)
+        return render_template("stock.html", stock_name=row.stock, stock_ticker=row.ticker, 
+        stock_price = "{:,.2f}".format(value), last_updated = format_time(row.updated),
+        percentage = calculate_percentage(value), image_link = image_link, overview_line = check_number_overview_line[check_number])
+    return error(stock_ticker)
 
 @app.route("/search")
 def search():
@@ -217,17 +204,6 @@ def search():
 @app.route("/error/<stock_ticker>")
 def error(stock_ticker):
     return render_template("error.html", error_stock=stock_ticker)
-
-# @app.route("/date=<date>")
-# def date(date):
-#     global check_number
-#     if date == "first":
-#         check_number = 0
-#     elif date == "second":
-#         check_number = 1
-#     elif date=="third":
-#         check_number = 2
-#     return redirect(url_for("home"))
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():

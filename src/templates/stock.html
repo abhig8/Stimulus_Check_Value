@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Stimmy Checkz | {{ stock_name | title }}{% endblock %}
+{% block title %}Stimmy Checkz | {{ stock_ticker | upper }}{% endblock %}
 
 {% block header%}
 	<div class="flex-container">
 	  <div class="item">
 	    <img style="max-width:150px; max-height:80px;" src= "{{ image_link }}"/>
-	  </div>
+	</div>
 	  <div class="item">
 	    <h1> {{stock_name}} </h1>
 	  </div>
@@ -34,9 +34,15 @@
 </h3>
 <h6>As of {{ last_updated }}</h6>
 <p> {{ overview_line }} </p> <br>
-<p>*USTT = US Trash Token - Alias for USD</p>
+<p>*USTT = US Trash Token - Alias for USD</p><br>
 
-<div id="kitty">
-	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+<div id="moving_meme">
+	{% if percentage > 0 %} 
+	  	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+	{% elif percentage == 0 %}
+		<img src="{{ url_for('static', filename='assets/img/bored-wojack.png') }}"/>
+	{% else %}
+	 	<img src="{{ url_for('static', filename='assets/img/crying-pepe.png') }}"/>
+	{% endif %}
 </div>
 {% endblock %}

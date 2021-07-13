@@ -23,12 +23,13 @@ p {
   margin: auto;
 }
 
+/* navbar search bar */
 .me-2 {
-    border-radius: 10000000px;
+    border-radius: 25px;
 }
 
 .btn-outline-success{
-  border-radius: 50px;
+  border-radius: 25px;
 }
 
 .flex-container {
@@ -59,21 +60,20 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 div.dataTables_wrapper div.dataTables_filter input {
   width: 99%;
-  border-radius: 100px;
+  border-radius: 25px;
   border-width: thin;
   padding-left: 10px;
   margin: auto;
   font-size: 20px;
 }
 
-#kitty {
+#moving_meme {
   position: absolute; 
   margin-top: 20px;
 }
 
-#kitty img {
-  max-width:300px; 
-  max-height:150px; 
+#moving_meme img {
+  width: 150px; 
   float: left;
 }
 
