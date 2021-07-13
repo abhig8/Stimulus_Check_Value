@@ -25,6 +25,7 @@ def get_curr_time():
 	return datetime.datetime.now().strftime('%m-%d-%Y %I:%M:%S %p')
 	# return('07-12-2021 01:00:00 PM')
 
+#hi
 
 # finding date check date 1: April 15, 2020
 # finding date check date 2: December 29th, 2020
