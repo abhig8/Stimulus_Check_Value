@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Stimmy Checkz|{{ stock_name | title }}{% endblock %}
+{% block title %}Stimmy Checkz | {{ stock_name | title }}{% endblock %}
 
 {% block header%}
 	<div class="flex-container">
@@ -33,7 +33,7 @@
 	{% endif %}
 </h3>
 <h6>As of {{ last_updated }}</h6>
-<p>Possible gains on a $1200 investment made on April 15, 2020</p> <br>
+<p> {{ overview_line }} </p> <br>
 <p>*USTT = US Trash Token - Alias for USD</p>
 
 <div id="kitty">

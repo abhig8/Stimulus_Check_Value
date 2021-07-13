@@ -28,6 +28,13 @@ login_manager.init_app(app)
 # if 2 --> check 3
 check_number = 0
 
+
+check_number_overview_line = {
+    0: "Possible gains on a $1200 investment made on April 15, 2020",
+    1: "Possible gains on a $600 investment made on December 29, 2020",
+    2: "Possible gains on a $1400 investment made on March 16, 2021"
+}
+
 users = {'abhig.123':{'password': 'myp@33w0.rd'}}
 
 class Investments(db.Model):
@@ -108,6 +115,14 @@ def format_time(date_time):
     return date_time[:10] + " at" + date_time[10:] + " " + "PST"
 
 
+def calculate_percentage(price):
+    if not check_number:
+        return int((price-1200)/12)
+    elif check_number == 1:
+        return int((price-600)/6)
+    elif check_number == 2:
+        return int((price-1400)/14)
+
 def top(investment_type):
     if investment_type == "Both":
         query = get_stocks() + get_cryptos()
@@ -131,7 +146,7 @@ def get_cryptos():
             price = float(price.second_check)
         elif check_number == 2:
             price = float(price.third_check)
-        query.append([x.stock.lower(), x.ticker, price, int((price-1200)/12), x.image_link])
+        query.append([x.stock.lower(), x.ticker, price, calculate_percentage(price), x.image_link])
     return query
 
 def get_stocks():
@@ -144,7 +159,7 @@ def get_stocks():
             price = float(price.second_check)
         elif check_number == 2:
             price = float(price.third_check)
-        query.append([x.stock.lower(), x.ticker, price, int((price-1200)/12), x.image_link])
+        query.append([x.stock.lower(), x.ticker, price, calculate_percentage(price), x.image_link])
     return query
 
 
@@ -156,16 +171,17 @@ def get_image_links(ticker, stock):
 
 @app.route("/")
 def home():
-    return render_template("overview.html", investment_list=top("Both"))
+    print(check_number)
+    return render_template("overview.html", investment_list=top("Both"), overview_line = check_number_overview_line[check_number])
 
 @app.route("/stocks")
 def stocks():
-    return render_template("overview.html", investment_list=top("Stock"))
+    return render_template("overview.html", investment_list=top("Stock"), overview_line = check_number_overview_line[check_number])
 
 
 @app.route("/cryptos")
 def cryptos():
-    return render_template("overview.html", investment_list=top("Crypto"))
+    return render_template("overview.html", investment_list=top("Crypto"), overview_line = check_number_overview_line[check_number])
 
 @app.route("/<stock_ticker>")
 def stock(stock_ticker):
@@ -180,7 +196,7 @@ def stock(stock_ticker):
                 price = float(stock_data.third_check)
             return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_data.ticker, 
             stock_price = "{:,.2f}".format(price), last_updated = format_time(stock_data.updated),
-            percentage = int((price-1200)/12), image_link = investment.image_link)
+            percentage = calculate_percentage(price), image_link = investment.image_link, overview_line = check_number_overview_line[check_number])
     for investment in Cryptos.query.all():
         if stock_ticker == investment.ticker or stock_ticker == investment.stock:
             stock_data = Investments.query.filter_by(ticker=investment.ticker).order_by(Investments.id.desc()).first()
@@ -192,7 +208,7 @@ def stock(stock_ticker):
                 price = float(stock_data.third_check)
             return render_template("stock.html", stock_name=stock_data.stock, stock_ticker=stock_data.ticker, 
             stock_price = "{:,.2f}".format(price), last_updated = format_time(stock_data.updated),
-            percentage = int((price-1200)/12), image_link = investment.image_link)
+            percentage = calculate_percentage(price), image_link = investment.image_link, overview_line = check_number_overview_line[check_number])
     else:
         return error(stock_ticker)
 
@@ -203,6 +219,17 @@ def search():
 @app.route("/error/<stock_ticker>")
 def error(stock_ticker):
     return render_template("error.html", error_stock=stock_ticker)
+
+@app.route("/date=<date>")
+def date(date):
+    global check_number
+    if date == "first":
+        check_number = 0
+    elif date == "second":
+        check_number = 1
+    elif date=="third":
+        check_number = 2
+    return redirect(url_for("home"))
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():

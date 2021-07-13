@@ -22,8 +22,8 @@ def get_time():
 
 def get_all_curr_values(curr_price, first_check_val, second_check_val, third_check_val):
 	first_val = "{0:.2f}".format(1200/float(first_check_val)*curr_price)
-	second_val = "{0:.2f}".format(1200/float(second_check_val)*curr_price)
-	third_val = "{0:.2f}".format(1200/float(third_check_val)*curr_price)
+	second_val = "{0:.2f}".format(600/float(second_check_val)*curr_price)
+	third_val = "{0:.2f}".format(1400/float(third_check_val)*curr_price)
 	return [first_val, second_val, third_val]
 
 
@@ -32,6 +32,7 @@ def update_stocks():
 	for x in c.fetchall():
 		ticker = x[0]
 		stock = x[1]
+		print(ticker)
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
@@ -39,8 +40,9 @@ def update_stocks():
 		row=c.fetchall()[0]
 		vals = get_all_curr_values(price, row[3], row[4], row[5])
 		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_time(), vals[0], vals[1], vals[2]])
-		clock.sleep(10)
+		clock.sleep(5)
 	conn.commit()
+
 
 def update_cryptos():
 	c.execute('select * from cryptos')

@@ -86,8 +86,8 @@ def add_crypto(ticker, name):
 
 def get_all_curr_values(curr_price, first_check_val, second_check_val, third_check_val):
 	first_val = "{0:.2f}".format(1200/float(first_check_val)*curr_price)
-	second_val = "{0:.2f}".format(1200/float(second_check_val)*curr_price)
-	third_val = "{0:.2f}".format(1200/float(third_check_val)*curr_price)
+	second_val = "{0:.2f}".format(600/float(second_check_val)*curr_price)
+	third_val = "{0:.2f}".format(1400/float(third_check_val)*curr_price)
 	return [first_val, second_val, third_val]
 
 def update_investment(ticker, name, investment_type, first_check_val, second_check_val, third_check_val):
