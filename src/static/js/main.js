@@ -29,3 +29,4 @@ function checkRadio(){
   document.getElementById('image_custom').checked = "checked";
 }
 
+}
