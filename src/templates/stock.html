@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ stock_name | title }}{% endblock %}
+{% block title %}Stimmy Checkz|{{ stock_name | title }}{% endblock %}
 
 {% block header%}
 	<div class="flex-container">
@@ -19,7 +19,6 @@
 
 <h2> ${{ stock_price }} USTT*</h2>
 
-
 <h3> 
 	{% if percentage > 0 %} 
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-arrow-up" viewBox="0 0 10 20">
@@ -34,8 +33,8 @@
 	{% endif %}
 </h3>
 <h6>As of {{ last_updated }}</h6>
-<p>Possible gains on a $1200 investment made on April 15, 2020</p>
-<p>*USTT = US Trash Token = USD</p>
+<p>Possible gains on a $1200 investment made on April 15, 2020</p> <br>
+<p>*USTT = US Trash Token - Alias for USD</p>
 
 <div id="kitty">
 	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
