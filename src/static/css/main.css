@@ -33,6 +33,11 @@ p {
   margin: 10px 0px;
 }
 
+.flex-container#stock_price {
+  margin: 0;
+  height: auto;
+}
+
 #stocks {
   vertical-align: middle; 
   text-align: left;
@@ -76,6 +81,9 @@ input#crypto {
     margin-left: 5px;
 }
 
+#ticker, #name {
+  text-transform: uppercase;
+}
 
 footer {
   padding-top: 10px;

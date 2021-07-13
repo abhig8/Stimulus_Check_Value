@@ -58,7 +58,7 @@ def add_stock(ticker, name):
 			timestamp1 = '1615852800'
 			timestamp2 = '1615939200'
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '/history?period1=' + str(timestamp1) + '&period2=' + str(timestamp2) + '&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true', headers=headers, timeout=5)
-		soup = bs4.BeautifulSoup(url.text, features="lxml")
+		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		table = soup.find("table", attrs={'class': 'W(100%) M(0)'})
 		table_body = table.find('tbody')
 		row_1 = table_body.find('tr').find_all('td')
@@ -77,7 +77,7 @@ def add_crypto(ticker, name):
 			timestamp1 = '1615852800'
 			timestamp2 = '1615939200'
 		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '-USD/history?period1=' + timestamp1 + '&period2=' + timestamp2 + '&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true', headers=headers, timeout=5)
-		soup = bs4.BeautifulSoup(url.text, features="lxml")
+		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		table = soup.find("table", attrs={'class': 'W(100%) M(0)'})
 		table_body = table.find('tbody')
 		row_1 = table_body.find('tr').find_all('td')
