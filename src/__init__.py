@@ -16,7 +16,6 @@ app.secret_key = 'key'
 # DATABASE_URL = "postgresql://aaclbzejzdxebt:eba4ca8018075b68e2c553d37745eb9b16194d663c1fd15ba85c7e3c934fae64@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d119nni8ln3u0i"
 DATABASE_URL = os.environ['DATABASE_URL']
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -27,7 +26,6 @@ login_manager.init_app(app)
 # if 1 --> check 2
 # if 2 --> check 3
 check_number = 0
-
 
 check_number_overview_line = {
     0: "Possible gains on a $1200 investment made on April 15, 2020",
@@ -220,16 +218,16 @@ def search():
 def error(stock_ticker):
     return render_template("error.html", error_stock=stock_ticker)
 
-@app.route("/date=<date>")
-def date(date):
-    global check_number
-    if date == "first":
-        check_number = 0
-    elif date == "second":
-        check_number = 1
-    elif date=="third":
-        check_number = 2
-    return redirect(url_for("home"))
+# @app.route("/date=<date>")
+# def date(date):
+#     global check_number
+#     if date == "first":
+#         check_number = 0
+#     elif date == "second":
+#         check_number = 1
+#     elif date=="third":
+#         check_number = 2
+#     return redirect(url_for("home"))
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
