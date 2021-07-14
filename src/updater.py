@@ -42,7 +42,7 @@ def update_stocks():
 		ticker = x[0]
 		stock = x[1]
 		print(ticker)
-		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker, hedaers = headers, timeout=10)
+		url = requests.get('https://finance.yahoo.com/quote/' + ticker + '?p=' + ticker, headers = headers, timeout=10)
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
 		c.execute('select * from stocks where ticker=' + f"'{ticker}'")
