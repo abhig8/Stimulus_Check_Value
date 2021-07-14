@@ -46,7 +46,9 @@ def update_stocks():
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
 		c.execute('select * from stocks where ticker=' + f"'{ticker}'")
-		row=c.fetchall()[0]
+		row = c.fetchall()
+		print(row)
+		row = row[0]
 		vals = get_all_curr_values(price, row[3], row[4], row[5])
 		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_curr_time(), vals[0], vals[1], vals[2]])
 		clock.sleep(10)
@@ -63,7 +65,9 @@ def update_cryptos():
 		soup = bs4.BeautifulSoup(url.text, features="html.parser")
 		price = float(soup.find_all("div", {'class': 'D(ib) smartphone_Mb(10px) W(70%) W(100%)--mobp smartphone_Mt(6px)'})[0].find('span').text.replace(',',''))
 		c.execute('select * from cryptos where ticker=' + f"'{ticker}'")
-		row=c.fetchall()[0]
+		row = c.fetchall()
+		print(row)
+		row = row[0]
 		vals = get_all_curr_values(price, row[3], row[4], row[5])
 		c.execute('insert into investments (ticker, stock, price, updated, first_check, second_check, third_check) values (%s,%s,%s,%s,%s,%s,%s)', [ticker, stock, price, get_curr_time(), vals[0], vals[1], vals[2]])
 		clock.sleep(10)
