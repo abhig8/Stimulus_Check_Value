@@ -6,6 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.executors.pool import ProcessPoolExecutor
+
 
 # get headers randomizer
 headers = { 
@@ -80,7 +82,7 @@ def update_cryptos():
 # 	print(e)
 
 
-scheduler = BlockingScheduler(timezone = 'America/Los_Angeles')
+scheduler = BlockingScheduler(timezone = 'America/Los_Angeles', executors={'default': ProcessPoolExecutor(max_workers=1)})
 scheduler.add_job(update_cryptos, 'interval', hours=1, start_date = '2021-06-05 23:00:00')
 scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour=6, minute=31)
 scheduler.add_job(update_stocks, 'cron', day_of_week='mon-fri', hour='7-13')
