@@ -5,7 +5,7 @@
 {% block header%}
   <div class="flex-container">
     <div class="item">
-      <img height="80px" src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+      <img height="80px" src="{{ url_for('static', filename='assets/img/gigacat.png') }}"/>
     </div>
     <div class="item">
       <h1> Stimmy Checkz </h1>
@@ -14,10 +14,10 @@
 {% endblock %}
 
 {% block content %}
-<h2>"{{ error_stock }}" Not Found!</h1>
-<h4>Tip: Click On Table Rows or Search for Tickers</h3>
+<h2 class="text-center">"{{ error_stock }}" Not Found!</h1>
+<h4 class="text-center">Tip: Click On Table Rows or Search for Tickers</h3>
 
-<div id="kitty">
-	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+<div id="moving_meme">
+  <img src="{{ url_for('static', filename='assets/img/bored-wojack.png') }}"/>
 </div>
 {% endblock %}

@@ -1,21 +1,5 @@
 * {
-  margin: 0;
-  padding: 0;
   font-family: sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6, div, p { 
-  text-align: center; 
-}
-
-h6 {
-  margin: 15px 5px;
-}
-
-a { 
-  text-decoration: none; 
-  color: black; 
-  outline: none; 
 }
 
 p {
@@ -40,9 +24,16 @@ p {
   align-items: center;
   column-gap: 10px;
   margin: 10px 0px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .flex-container#stock_price {
+  margin: 0;
+  height: auto;
+}
+
+#date-selection-box{
   margin: 0;
   height: auto;
 }
@@ -52,6 +43,11 @@ p {
   text-align: left;
 }
 
+.btn-light{
+  border-radius: 5px;
+  border: thin;
+  border-color: black;
+}
 
 div.dataTables_wrapper div.dataTables_filter label {
   width: 99%;

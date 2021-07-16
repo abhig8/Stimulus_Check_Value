@@ -17,9 +17,9 @@
 
 {% block content %}
 
-<h2> ${{ stock_price }} USTT*</h2>
+<h2 class="text-center"> ${{ stock_price }} USTT*</h2>
 
-<h3> 
+<h3 class="text-center"> 
 	{% if percentage > 0 %} 
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-arrow-up" viewBox="0 0 10 20">
         	<path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
@@ -31,14 +31,14 @@
 			<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
 		</svg><span style="color: Red">{{ percentage | abs }}%</span>
 	{% endif %}
-</h3>
-<h6>As of {{ last_updated }}</h6>
-<p> {{ overview_line }} </p> <br>
-<p>*USTT = US Trash Token - Alias for USD</p><br>
+</h3 class="text-center">
+<h6 class="text-center">As of {{ last_updated }}</h6>
+<p class="text-center"> {{ overview_line }} </p> <br>
+<p class="text-center">*USTT = US Trash Token - Alias for USD</p><br>
 
 <div id="moving_meme">
 	{% if percentage > 0 %} 
-	  	<img src="{{ url_for('static', filename='assets/img/favicon.png') }}"/>
+	  	<img src="{{ url_for('static', filename='assets/img/gigacat.png') }}"/>
 	{% elif percentage == 0 %}
 		<img src="{{ url_for('static', filename='assets/img/bored-wojack.png') }}"/>
 	{% else %}
