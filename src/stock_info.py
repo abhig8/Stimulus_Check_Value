@@ -16,6 +16,9 @@ ticker_investment = {**ticker_stock, **ticker_crypto}
 prices_april = [142.00, 1234.00, 70.16, 31.70, 172.82, 2245.00, 412.25, 4.90, 2.02, 3.17, .92, 3.70, 29.96, 169.24, 105.25, 59.45, 6555.50, 150.36, .001886, .177, 38.60, .9811, 3.02, 4.92, 209.52, 0.1689]
 ticker_price_april = dict(zip(tickers, prices_april))
 
+
+# lol
+
 """
 adjusted for stock split:
 
