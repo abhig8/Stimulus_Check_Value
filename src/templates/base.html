@@ -8,8 +8,8 @@
 		<link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="apple-touch-icon">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 		<link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+		<link href="~/lib/datatables/media/css/dataTables.uikit.css" rel="stylesheet" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css')}}"> 
-		<script data-ad-client="ca-pub-6596558267360632" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	</head>
 
 	<body>
@@ -22,17 +22,18 @@
 		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
-		          <a class="nav-link active" aria-current="page" href="/">Home</a>
+		          <a class="nav-link active" aria-current="page" href="{{ url_for('home', check_number=g.check_number) }}">Home</a>
 		        </li>
 		        <li class="nav-item">
-		        	<a class="nav-link active" aria-current="page" href="/stocks">Stocks</a>
+		        	<a class="nav-link active" aria-current="page" href="{{ url_for('stocks', check_number=g.check_number) }}">Stocks</a>
 		        </li>
 		        <li class="nav-item">
-		        	<a class="nav-link active" aria-current="page" href="/cryptos">Cryptos</a>
+		        	<a class="nav-link active" aria-current="page" href="{{ url_for('cryptos', check_number=g.check_number) }}">Cryptos</a>
 		        </li>
 		      </ul>
-		      <form class="d-flex" action="{{url_for('search')}}" method = "get">
+		      <form class="d-flex" action="{{ url_for('search') }}" method = "get">
 		        <input class="form-control me-2" type="search" placeholder="Ticker" aria-label="Search" name = "q">
+		        <input type="hidden" name="check_number" value={{ g.check_number }} /> 
 		        <button class="btn btn-outline-success" type="submit">Search</button>
 		      </form>
 		    </div>

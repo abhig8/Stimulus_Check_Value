@@ -1,22 +1,20 @@
-
-
 <div id="date-select-box" class="flex-container">
- 	<div class="flex-item">
- 		<p>Select Stimmy Check Date:</p>
- 	</div>
-    <div class="item">
-      <a href="#first">
-      	<button type="button" class="btn btn-light">First</button>
-      </a>
-    </div>
-    <div class="item">
-      <a href="#first">
-      	<button type="button" class="btn btn-light">Second</button>
-      </a>
-    </div>
-    <div class="item">
-      <a href="#first">
-      	<button type="button" class="btn btn-light">Third</button>
-      </a>
-    </div>
+  <div class="flex-item">
+    <p>Select a Stimmy Check:</p>
+  </div>
+  <div>
+    {% set stock = 'stock' %}
+    {% for item in ['First', 'Second', 'Third'] %}
+     <a
+      {% if request.endpoint == stock %}
+        href= "{{ url_for(request.endpoint, stock_ticker=stock_ticker, check_number=loop.index) }}"
+      {% else %}
+        href = "{{ url_for(request.endpoint, check_number=loop.index) }}"
+      {% endif %}
+      class="btn {% if g.check_number == loop.index %} active btn-primary {% else %} btn-outline-primary {% endif %}"
+     >
+      {{item}}
+     </a>
+    {% endfor %}
+  </div>
  </div>

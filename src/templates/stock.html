@@ -33,8 +33,13 @@
 	{% endif %}
 </h3 class="text-center">
 <h6 class="text-center">As of {{ last_updated }}</h6>
-<p class="text-center"> {{ overview_line }} </p> <br>
-<p class="text-center">*USTT = US Trash Token - Alias for USD</p><br>
+<p class="text-center text-margin"> {{ overview_line }} </p>
+<p class="text-center text-margin">*USTT = US Trash Token - Alias for USD</p>
+<div>
+	{% include 'date_selection.html' %}
+</div>
+
+
 
 <div id="moving_meme">
 	{% if percentage > 0 %} 

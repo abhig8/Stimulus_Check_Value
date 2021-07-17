@@ -12,7 +12,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 c = conn.cursor()
 
 def update_stocks():
-	c.execute('select * from stocks')
+	c.execute('select * from assets where investment_type=%s', ('Stock',))
 	for x in c.fetchall():
 		ticker = x[0]
 		stock = x[1]
@@ -32,7 +32,7 @@ def update_stocks():
 
 
 def update_cryptos():
-	c.execute('select * from cryptos')
+	c.execute('select * from assets where investment_type=%s', ('Crypto',))
 	for x in c.fetchall():
 		ticker = x[0]
 		stock = x[1]
@@ -50,10 +50,12 @@ def update_cryptos():
 		clock.sleep(10)
 	conn.commit()
 
+
 try:
 	update_cryptos()
 	# update_stocks()
 except Exception as e:
+	print('here')
 	print(e)
 
 

@@ -12,15 +12,15 @@ def add_investment(investment_type, ticker, name, image_link):
 	try: 
 		if investment_type == "Stock":
 			first_date_value, second_date_value, third_date_value = get_lowest_price(ticker, 1, "Stock"), get_lowest_price(ticker, 2, "Stock"), get_lowest_price(ticker, 3, "Stock")
-			sql = ('insert into stocks (ticker, stock, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s) ' 
-				   'on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, first_check_val=EXCLUDED.first_check_val, '
-				   'second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val')
+			sql = ('insert into assets (ticker, stock, investment_type, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s,%s) ' 
+				   'on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, investment_type=EXCLUDED.investment_type,'
+				   'first_check_val=EXCLUDED.first_check_val, second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val')
 		elif investment_type == "Crypto":
 			first_date_value, second_date_value, third_date_value = get_lowest_price(ticker, 1, "Crypto"), get_lowest_price(ticker, 2, "Crypto"), get_lowest_price(ticker, 3, "Crypto")
-			sql = ('insert into cryptos (ticker, stock, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s) ' 
-				   'on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, first_check_val=EXCLUDED.first_check_val, '
-				   'second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val')
-		c.execute(sql, [ticker, name, image_link , first_date_value, second_date_value, third_date_value])
+			sql = ('insert into assets (ticker, stock, investment_type, image_link, first_check_val, second_check_val, third_check_val) values (%s,%s,%s,%s,%s,%s,%s) ' 
+				   'on conflict(ticker) do update set stock=EXCLUDED.stock, image_link=EXCLUDED.image_link, investment_type=EXCLUDED.investment_type,'
+				   'first_check_val=EXCLUDED.first_check_val, second_check_val=EXCLUDED.second_check_val, third_check_val=EXCLUDED.third_check_val')
+		c.execute(sql, [ticker, name, investment_type, image_link , first_date_value, second_date_value, third_date_value])
 		update_investment(ticker, name, investment_type, first_date_value, second_date_value, third_date_value)
 		conn.commit()
 	except Exception as e:

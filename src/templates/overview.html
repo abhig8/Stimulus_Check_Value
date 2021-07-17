@@ -22,6 +22,7 @@
     <table id="stocks" class="table table-hover" width="100%">
       <thead>
         <tr>
+            <th>#</th>
             <th>Investment</th>
             <th>Value</th>
             <th>Percent Change</th>
@@ -29,29 +30,32 @@
       </thead>
       <tbody>
         {% for investment in investment_list%}
-          <tr onclick="window.location='{{ investment[1] }}';">
-              <td>
-                <img 
-                  style = "max-width:100px; max-height:45px;"
-                          src="{{ investment[4] }}"
-                          />
-                 <font style="cursor: pointer;"> {{ investment[0] | upper }}</font>
-                 <font style="cursor: pointer;" size="-1" color="#696969">{{investment[1]}}</font>
-              </td>
-              <td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
-              <td data-order= "{{investment[2]}}">
-                {% if investment[3] > 0 %} 
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
-                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-                  </svg><span style="color: Green">{{ investment[3] }}%</span>
-                {% elif investment[3] == 0 %}
-                  0% 
-                {% else %}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="30" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
-                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                    </svg><span style="color: Red">{{ investment[3] | abs }}%</span>
-                {% endif %}
-              </td>
+          <tr onclick="window.location.href='{{ url_for('stock', stock_ticker=investment[1], check_number=g.check_number) }}';">
+            <td>
+              {{ loop.index }}
+            </td>
+            <td>
+              <img 
+                style = "max-width:100px; max-height:45px;"
+                        src="{{ investment[4] }}"
+                        />
+               <font style="cursor: pointer;"> {{ investment[0] | upper }}</font>
+               <font style="cursor: pointer;" size="-1" color="#696969">{{investment[1]}}</font>
+            </td>
+            <td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
+            <td data-order= "{{investment[2]}}">
+              {% if investment[3] > 0 %} 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                </svg><span style="color: Green">{{ investment[3] }}%</span>
+              {% elif investment[3] == 0 %}
+                0% 
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="30" fill="Red" class="bi bi-arrow-down-short" viewBox="0 0 16 20">
+                      <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                  </svg><span style="color: Red">{{ investment[3] | abs }}%</span>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>

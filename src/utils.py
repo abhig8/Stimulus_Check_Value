@@ -29,12 +29,6 @@ def get_latest_value(check_number, row):
     elif check_number == 3:
         return float(row.third_check)
 
-def get_image_links(ticker, stock):
-    link_1 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
-    link_2 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
-    link_3 = "https://cryptologos.cc/logos/" + stock.lower().replace(" ","-") + "-" + ticker.lower() + "-logo.png"
-    return [link_1, link_2, link_3]
-
 def get_all_curr_values(curr_price, first_check_val, second_check_val, third_check_val):
     first_val = "{0:.2f}".format(1200/float(first_check_val)*curr_price)
     second_val = "{0:.2f}".format(600/float(second_check_val)*curr_price)
@@ -65,7 +59,12 @@ def get_overview_line(check_number):
         return "Possible gains on a $1400 investment made on March 16, 2021"
 
 def get_formatted_check_number(check_number):
-    check_number = int(check_number)
-    if check_number not in [1, 2, 3]:
-        return 1
-    return check_number
+    if check_number in ['2', '3'] or check_number in [2, 3]:
+        return int(check_number)
+    return 1
+
+def get_image_links(ticker, stock):
+    link_1 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.upper() + ".png"
+    link_2 = "https://eodhistoricaldata.com/img/logos/US/" + ticker.lower() + ".png"
+    link_3 = "https://cryptologos.cc/logos/" + stock.lower().replace(" ","-") + "-" + ticker.lower() + "-logo.png"
+    return [link_1, link_2, link_3]

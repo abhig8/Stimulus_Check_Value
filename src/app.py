@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, url_for, redirect
+from flask import Flask, render_template, session, request, url_for, redirect, g
 import flask_login
 from flask_login import LoginManager, UserMixin
 from .new_investment import add_investment
@@ -19,6 +19,10 @@ db.init_app(app)
 
 login_manager.init_app(app)
 
+@app.before_request
+def before_request():
+    g.check_number = get_formatted_check_number(request.args.get('check_number'))
+    
 
 # if 1: check date 1: April 15, 2020
 # if 2: check date 2: December 29th, 2020
@@ -27,41 +31,35 @@ login_manager.init_app(app)
 
 def top(investment_type, check_number):
     if investment_type == "Both":
-        query = Stocks.get_all_stocks(check_number) + Cryptos.get_all_cryptos(check_number)
+        query = Assets.get_all_stocks(check_number) + Assets.get_all_cryptos(check_number)
     elif investment_type == "Crypto":
-        query = Cryptos.get_all_cryptos(check_number)
+        query = Assets.get_all_cryptos(check_number)
     elif investment_type == "Stock":
-        query = Stocks.get_all_stocks(check_number)
+        query = Assets.get_all_stocks(check_number)
     query.sort(key = lambda x: x[2], reverse = True)
     for entry in query:
         entry[2] = "{:,.2f}".format(entry[2])
     return query
 
-@app.route("/", defaults={'check_number': '1'})
-@app.route("/check_number/<check_number>")
-def home(check_number):
-    check_number = get_formatted_check_number(check_number)
+@app.route("/")
+def home():
+    check_number = get_formatted_check_number(request.args.get('check_number'))
     return render_template("overview.html", investment_list=top("Both", check_number), overview_line = get_overview_line(check_number))
 
-@app.route("/stocks", defaults={'check_number': '1'})
-@app.route("/stocks/check_number/<check_number>")
-def stocks(check_number):
-    check_number = get_formatted_check_number(check_number)
+@app.route("/stocks")
+def stocks():
+    check_number = get_formatted_check_number(request.args.get('check_number'))
     return render_template("overview.html", investment_list=top("Stock", check_number), overview_line = get_overview_line(check_number))
 
-@app.route("/cryptos", defaults={'check_number': '1'})
-@app.route("/cryptos/check_number/<check_number>")
-def cryptos(check_number):
-    check_number = get_formatted_check_number(check_number)
+@app.route("/cryptos")
+def cryptos():
+    check_number = get_formatted_check_number(request.args.get('check_number'))
     return render_template("overview.html", investment_list=top("Crypto", check_number), overview_line = get_overview_line(check_number))
 
-@app.route("/<stock_ticker>", defaults={'check_number': '1'})
-@app.route("/<stock_ticker>/check_number/<check_number>")
-def stock(stock_ticker, check_number):
-    check_number = get_formatted_check_number(check_number)
-    asset_row = Stocks.query.filter_by(ticker=stock_ticker).first()
-    if not asset_row:
-        asset_row = Cryptos.query.filter_by(ticker=stock_ticker).first()
+@app.route("/<stock_ticker>")
+def stock(stock_ticker):
+    check_number = get_formatted_check_number(request.args.get('check_number'))
+    asset_row = Assets.query.filter_by(ticker=stock_ticker).first()
     if asset_row:
         image_link = asset_row.image_link
         latest_row = Investments.query.order_by(Investments.id.desc()).filter_by(ticker=stock_ticker).first()
@@ -73,7 +71,8 @@ def stock(stock_ticker, check_number):
 
 @app.route("/search")
 def search():
-    return stock(request.args.get("q").upper())
+    check_number = get_formatted_check_number(request.args.get('check_number'))
+    return redirect(url_for('stock', stock_ticker=request.args.get("q").upper(), check_number=check_number))
 
 @app.route("/error/<stock_ticker>")
 def error(stock_ticker):
