@@ -14,4 +14,4 @@ bs4==0.0.1
 requests==2.25.1
 APScheduler==3.7.0
 flask_login==0.4.1
-newrelic==n.n.n.n
+newrelic==6.4.4.161
