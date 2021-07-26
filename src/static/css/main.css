@@ -43,7 +43,7 @@ p {
   width: 5% !important;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 400px) and (-webkit-min-device-pixel-ratio: 3) {
   .first-column {
     width: 2% !important;
   }
