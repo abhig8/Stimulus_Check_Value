@@ -7,7 +7,16 @@ p {
   margin: auto;
 }
 
-/* navbar search bar */
+
+#date-selection-caption {
+  width: 190px;
+}
+
+#investment-table-container {
+  padding: 4px;
+}
+
+/* navbar search box */
 .me-2 {
     border-radius: 25px;
 }
@@ -16,30 +25,10 @@ p {
   border-radius: 25px;
 }
 
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: 90px;
-  align-items: center;
-  column-gap: 10px;
-  margin: 10px 0px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.flex-container#stock_price {
-  margin: 0;
-  height: auto;
-}
-
-#date-select-box{
-  height: auto;
-}
-
 #stocks {
   vertical-align: middle; 
-  text-align: left;
+  table-layout: fixed;
+  width: 100% !important;
 }
 
 #stocks_info {
@@ -50,28 +39,38 @@ p {
   margin-top: 5px;
 }
 
-.btn-light{
-  border-radius: 5px;
+.first-column {
+  width: 5% !important;
 }
 
-.btn:active,
-.btn.active {
-  outline: 0;
+@media screen and (max-width: 400px) {
+  .first-column {
+    width: 2% !important;
+  }
+  .second-column {
+    width: 21% !important;
+  }
+  .third-column {
+    width: 18% !important;
+  }
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
-  width: 99%;
-  margin: auto;
+  justify-content: center;
+  width: 99% !important;
+  margin: auto 0px;
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
-  width: 99%;
+  justify-content: center;
+  width: 99% !important;
   border-radius: 25px;
   border-width: thin;
   padding-left: 10px;
-  margin: auto;
+  margin: auto 0px;
   font-size: 20px;
 }
+
 
 #moving_meme {
   position: absolute; 
@@ -92,17 +91,13 @@ form#admin, form#logout{
 }
 
 input#stock {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 input#crypto {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 #ticker, #name {
   text-transform: uppercase;
-}
-
-footer {
-  padding-top: 10px;
 }

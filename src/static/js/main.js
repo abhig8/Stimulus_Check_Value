@@ -1,14 +1,8 @@
 $(document).ready(function() {
   $('#stocks').DataTable({
-  	// "dom":"ftip",
     "paging": false,
-    // 'columnDefs': [
-    // {'width': '5', 'targets': 0},
-    // {'width': '270', 'targets': 1},
-    // {'width': '100', 'targets': 2},
-    // {'width': '100', 'targets': 3}
-    // ],
-    // "order": [[ 2, "desc" ]],
+    "bAutoWidth": false,
+    "order": [[ 2, "desc" ]],
     language: {
 	    searchPlaceholder: "Search",
 	    search: "",
