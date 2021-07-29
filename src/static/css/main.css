@@ -2,11 +2,11 @@
   font-family: sans-serif;
 }
 
-p {
+/*p {
   width: 96%;
   margin: auto;
 }
-
+*/
 
 #date-selection-caption {
   width: 190px;
@@ -39,19 +39,21 @@ p {
   margin-top: 5px;
 }
 
+
 .first-column {
-  width: 5% !important;
+  width: 4%;
 }
 
-@media screen and (max-width: 400px) and (-webkit-min-device-pixel-ratio: 3) {
-  .first-column {
-    width: 2% !important;
+.second-column {
+  width: 25%;
+}
+
+@media only screen and (max-width:576px) {
+  .first-column{
+    width: 13%;
   }
   .second-column {
-    width: 22% !important;
-  }
-  .third-column {
-    width: 18% !important;
+    width: 33%;
   }
 }
 

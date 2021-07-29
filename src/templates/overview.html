@@ -24,8 +24,8 @@
         <tr>
             <th class="first-column">#</th>
             <th class="second-column">Investment</th>
-            <th class="third-column">Value</th>
-            <th class="fourth-column">Percent Change</th>
+            <th>Value</th>
+            <th>Percent Change</th>
         </tr>
       </thead>
       <tbody>
@@ -36,14 +36,14 @@
             </td>
             <td class="second-column">
               <img 
-                style = "max-width:90px; max-height:40px"
+                style = "max-width:90px; max-height:40px;"
                         src="{{ investment[4] }}"
                         />
                <font style="cursor:pointer; font-size:12px"> {{ investment[0] | upper }}</font>
                <font style="cursor: pointer; font-size:10px" color="#696969">{{investment[1]}}</font>
             </td>
-            <td class="third-column"><font style="cursor: pointer;">${{ investment[2] }}</font></td>
-            <td data-order= "{{investment[2]}}" class="fourth-column">
+            <td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
+            <td data-order= "{{investment[2]}}">
               {% if investment[3] > 0 %} 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="Green" class="bi bi-arrow-up" viewBox="0 0 16 20">
                   <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
