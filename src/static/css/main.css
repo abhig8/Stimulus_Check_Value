@@ -2,11 +2,6 @@
   font-family: sans-serif;
 }
 
-/*p {
-  width: 96%;
-  margin: auto;
-}
-*/
 
 #date-selection-caption {
   width: 190px;
@@ -27,8 +22,8 @@
 
 #stocks {
   vertical-align: middle; 
-  table-layout: fixed;
-  width: 100% !important;
+/*  table-layout: fixed;
+  width: 100% !important;*/
 }
 
 #stocks_info {
@@ -40,39 +35,37 @@
 }
 
 
-.first-column {
+/*.first-column {
   width: 4%;
 }
 
-.second-column {
-  width: 25%;
-}
 
 @media only screen and (max-width:576px) {
   .first-column{
     width: 13%;
   }
   .second-column {
-    width: 33%;
+    width: 40%;
   }
 }
+*/
+
 
 div.dataTables_wrapper div.dataTables_filter label {
   justify-content: center;
   width: 99% !important;
-  margin: auto 0px;
+  margin: auto 5px;
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
   justify-content: center;
   width: 99% !important;
+  margin: auto 5px;
   border-radius: 25px;
   border-width: thin;
   padding-left: 10px;
-  margin: auto 0px;
   font-size: 20px;
 }
-
 
 #moving_meme {
   position: absolute; 

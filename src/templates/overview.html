@@ -22,8 +22,8 @@
     <table id="stocks" class="table table-hover text-left">
       <thead>
         <tr>
-            <th class="first-column">#</th>
-            <th class="second-column">Investment</th>
+            <th>#</th>
+            <th>Investment</th>
             <th>Value</th>
             <th>Percent Change</th>
         </tr>
@@ -31,16 +31,32 @@
       <tbody>
         {% for investment in investment_list%}
           <tr onclick="window.location.href='{{ url_for('stock', stock_ticker=investment[1], check_number=g.check_number) }}';">
-            <td class="first-column">
+            <td>
               {{ loop.index }}
             </td>
-            <td class="second-column">
-              <img 
+            <td>
+              <div class="d-flex align-items-center flex-nowrap">
+                <div class="me-1">
+                  <img 
+                    style = "max-width:90px; max-height:40px;"
+                    src="{{ investment[4] }}"
+                  />
+                </div>
+                <div class="d-flex flex-column">
+                  <div>
+                    <font style="cursor:pointer; font-size:12px"> {{ investment[0] | upper }}</font>
+                  </div>
+                  <div>
+                    <font style="cursor: pointer; font-size:10px" color="#696969">{{investment[1]}}</font>
+                  </div>
+                </div>
+              </div>
+             <!--  <img 
                 style = "max-width:90px; max-height:40px;"
                         src="{{ investment[4] }}"
                         />
                <font style="cursor:pointer; font-size:12px"> {{ investment[0] | upper }}</font>
-               <font style="cursor: pointer; font-size:10px" color="#696969">{{investment[1]}}</font>
+               <font style="cursor: pointer; font-size:10px" color="#696969">{{investment[1]}}</font> -->
             </td>
             <td><font style="cursor: pointer;">${{ investment[2] }}</font></td>
             <td data-order= "{{investment[2]}}">
